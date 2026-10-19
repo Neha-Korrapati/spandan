@@ -3,6 +3,8 @@ import useNow from '../hooks/useNow'
 import HelpButton from './HelpButton'
 import ThemeToggle from './ThemeToggle'
 import ProfileDropdown from './ProfileDropdown'
+import { Check, Copy, School } from 'lucide-react'
+import { renderIcon } from './icons'
 
 // Page-level building blocks shared by every page (dashboards, lists, forms), in the same visual
 // language as the results page (components/InsightUI.jsx): the blue header gradient, soft cards,
@@ -68,7 +70,7 @@ export function PageHeader({ icon, eyebrow, title, subtitle, isMobile, children 
             <span aria-hidden="true" style={{
               width: 52, height: 52, flexShrink: 0, borderRadius: 16, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: 26,
               background: 'rgba(255,255,255,0.16)', border: '1px solid rgba(255,255,255,0.28)', boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.25)'
-            }}>{icon}</span>
+            }}>{renderIcon(icon, 26)}</span>
           )}
           <div style={{ minWidth: 0 }}>
             {eyebrow && <div style={{ fontSize: 12, fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', opacity: 0.8, marginBottom: 4 }}>{eyebrow}</div>}
@@ -115,7 +117,7 @@ export function ChoiceCard({ icon, title, description, active, onClick, tint = '
       background: active ? tintBg(tint, 9) : 'var(--input-bg)',
       boxShadow: active ? `0 4px 14px ${tintBg(tint, 18)}` : 'none'
     }}>
-      <span aria-hidden="true" style={{ width: 36, height: 36, flexShrink: 0, borderRadius: 11, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: 18, background: `linear-gradient(135deg, ${tintBg(tint, 10)}, ${tintBg(tint, 26)})` }}>{icon}</span>
+      <span aria-hidden="true" style={{ width: 36, height: 36, flexShrink: 0, borderRadius: 11, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: 18, color: toneText(tint), background: `linear-gradient(135deg, ${tintBg(tint, 10)}, ${tintBg(tint, 26)})` }}>{renderIcon(icon, 18)}</span>
       <span style={{ minWidth: 0 }}>
         <span style={{ display: 'block', fontSize: 14, fontWeight: 650 }}>{title}</span>
         <span style={{ display: 'block', fontSize: 12, color: 'var(--text-secondary)', marginTop: 2 }}>{description}</span>
@@ -134,7 +136,7 @@ export function CodeChip({ code }) {
   return (
     <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '4px 6px 4px 10px', borderRadius: 10, background: tintBg('var(--accent)', 9), border: `1px solid ${tintBg('var(--accent)', 22)}` }}>
       <span style={{ fontFamily: 'ui-monospace, SFMono-Regular, Menlo, monospace', fontWeight: 700, letterSpacing: '0.12em', color: 'var(--accent)', fontSize: 13 }}>{code}</span>
-      <button type="button" onClick={copy} aria-label={`Copy room code ${code}`} title="Copy code" style={{ border: 'none', background: 'transparent', cursor: 'pointer', fontSize: 12, padding: '2px 4px', color: 'var(--text-secondary)' }}>{copied ? '✓' : '⧉'}</button>
+      <button type="button" onClick={copy} aria-label={`Copy room code ${code}`} title="Copy code" style={{ border: 'none', background: 'transparent', cursor: 'pointer', fontSize: 12, padding: '2px 4px', display: 'inline-flex', color: 'var(--text-secondary)' }}>{copied ? <Check size={13} strokeWidth={2.5} aria-hidden="true" /> : <Copy size={13} aria-hidden="true" />}</button>
     </span>
   )
 }
@@ -151,7 +153,7 @@ export function Pill({ children, tone = 'var(--accent)', dot }) {
 
 // A room card: icon + name + status, code chip, meta line, primary action.
 // extraActions: more buttons next to the primary one (e.g. delete).
-export function RoomCard({ icon = '🏫', title, code, status, meta = [], actionLabel, onAction, onOpen, tint = 'var(--accent)', tourAction, extraActions }) {
+export function RoomCard({ icon = School, title, code, status, meta = [], actionLabel, onAction, onOpen, tint = 'var(--accent)', tourAction, extraActions }) {
   return (
     <div className="app-card app-card--hover" onClick={onOpen} style={{
       display: 'flex', flexDirection: 'column', gap: 12, padding: 18, minWidth: 0, boxSizing: 'border-box', cursor: onOpen ? 'pointer' : 'default',
@@ -160,7 +162,7 @@ export function RoomCard({ icon = '🏫', title, code, status, meta = [], action
     }}>
       <span aria-hidden="true" style={{ position: 'absolute', inset: '0 0 auto 0', height: 3, background: `linear-gradient(90deg, ${tint}, ${tintBg(tint, 35)})` }} />
       <div style={{ display: 'flex', alignItems: 'flex-start', gap: 12 }}>
-        <span aria-hidden="true" style={{ width: 40, height: 40, flexShrink: 0, borderRadius: 12, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: 19, background: `linear-gradient(135deg, ${tintBg(tint, 10)}, ${tintBg(tint, 26)})`, border: `1px solid ${tintBg(tint, 22)}` }}>{icon}</span>
+        <span aria-hidden="true" style={{ width: 40, height: 40, flexShrink: 0, borderRadius: 12, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: 19, color: toneText(tint), background: `linear-gradient(135deg, ${tintBg(tint, 10)}, ${tintBg(tint, 26)})`, border: `1px solid ${tintBg(tint, 22)}` }}>{renderIcon(icon, 20)}</span>
         <div style={{ flex: 1, minWidth: 0 }}>
           <h3 style={{ margin: 0, fontSize: 16, fontWeight: 700, color: 'var(--text-primary)', letterSpacing: '-0.01em', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }} title={title}>{title}</h3>
           {status && <div style={{ marginTop: 6 }}>{status}</div>}
@@ -188,7 +190,7 @@ export function RoomCard({ icon = '🏫', title, code, status, meta = [], action
 export function EmptyState({ icon, title, description, children }) {
   return (
     <div style={{ textAlign: 'center', padding: '44px 24px', background: 'var(--bg-card)', border: '1px dashed var(--border-color)', borderRadius: 18 }}>
-      <div aria-hidden="true" style={{ width: 64, height: 64, margin: '0 auto 14px', borderRadius: 20, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 30, background: `linear-gradient(135deg, ${tintBg('var(--accent)', 8)}, ${tintBg('var(--accent)', 20)})` }}>{icon}</div>
+      <div aria-hidden="true" style={{ width: 64, height: 64, margin: '0 auto 14px', borderRadius: 20, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 30, color: 'var(--accent)', background: `linear-gradient(135deg, ${tintBg('var(--accent)', 8)}, ${tintBg('var(--accent)', 20)})` }}>{renderIcon(icon, 30, { strokeWidth: 1.75 })}</div>
       <div style={{ fontSize: 16, fontWeight: 700, color: 'var(--text-primary)' }}>{title}</div>
       {description && <p style={{ margin: '6px auto 0', maxWidth: 420, fontSize: 13.5, color: 'var(--text-secondary)', lineHeight: 1.5 }}>{description}</p>}
       {children && <div style={{ marginTop: 16 }}>{children}</div>}
@@ -199,5 +201,6 @@ export function EmptyState({ icon, title, description, children }) {
 // Small square icon button (e.g. delete) for card action rows.
 export const iconButton = (tone = '#ef4444') => ({
   width: 42, flexShrink: 0, borderRadius: 12, cursor: 'pointer', fontSize: 15, fontWeight: 700,
+  display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 6, padding: 0,
   border: `1px solid ${tintBg(tone, 30)}`, background: tintBg(tone, 10), color: toneText(tone)
 })

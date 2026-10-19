@@ -41,20 +41,20 @@ export const TOURS = {
     steps: [
       { target: 'history-list', title: 'Ended sessions', body: 'Every room you have ended, newest first, with its code and end date.' },
       { target: 'view-results', title: 'Reopen the analytics', body: 'View Results → shows the summary cards and the question-by-question correct rates for that session.' },
-      { target: 'csv-button', title: 'Export the data', body: '⬇ CSV downloads every response of the session as a spreadsheet — handy for an offline gradebook or your own analysis.' },
+      { target: 'csv-button', title: 'Export the data', body: 'CSV downloads every response of the session as a spreadsheet — handy for an offline gradebook or your own analysis.' },
     ],
   },
   console: {
     role: 'teacher', path: /^\/teacher\/room\/[^/]+\/?$/,
     steps: [
       { target: 'room-code', title: 'Share the code',
-        body: 'Students join with this code (📋 Copy puts it on your clipboard). The Participants box next to it counts who is in the room right now.' },
+        body: 'Students join with this code (Copy puts it on your clipboard). The Participants box next to it counts who is in the room right now.' },
       { target: 'settings', title: 'Set up the session first',
         body: 'Segment time, questions per segment, difficulty, question-type mix, time to answer, points and the anonymous leaderboard all live here. Adjust them before you start recording.' },
       { target: 'start-capture', title: 'Start teaching',
         body: 'Normal mode: click the microphone and talk. Video mode: Start Session, share this tab with its audio, and press play. Spandan transcribes as it goes.' },
       { target: 'transcript', title: 'Watch the transcript',
-        body: 'Your words stream in here, segment by segment. When a segment ends, questions are generated automatically; 🔄 Generate Q does it on demand.' },
+        body: 'Your words stream in here, segment by segment. When a segment ends, questions are generated automatically; Generate Q does it on demand.' },
       { target: 'paste-generate', title: 'Other ways to ask',
         body: 'Paste & Generate turns any text into questions. Create Q, next to it, lets you write a question yourself. A chime tells you (and students) when a generated batch is ready.' },
       { target: 'end-room', title: 'Finish up',
@@ -106,7 +106,7 @@ export const TOURS = {
     role: 'student', path: /^\/student\/session\/[^/]+\/?$/,
     steps: [
       { target: 'status-row', title: 'You are connected',
-        body: 'The green dot means you are live in the room. 🔔 mutes the question-time chime on this device. Leave exits the session (not possible once you have answered).' },
+        body: 'The green dot means you are live in the room. The bell button mutes the question-time chime on this device. Leave exits the session (not possible once you have answered).' },
       { target: 'question-area', title: 'Questions appear here',
         body: 'When the teacher launches a poll it takes over this screen with a countdown. Pick your answer before the timer ends — points reward speed as well as correctness.' },
       { target: 'past-questions', title: 'What you have answered', body: 'Your earlier questions, your answer and whether it was correct.' },

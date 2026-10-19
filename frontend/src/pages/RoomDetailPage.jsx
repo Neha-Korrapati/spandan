@@ -22,6 +22,8 @@ import useGeneratedBatchCues from '../hooks/useGeneratedBatchCues'
 import { transcribeAudio, getTranscriptionStatus, convertWebMToWav } from '../services/serverTranscriptionService'
 import { requestQuestionGeneration, fetchAllRoomQuestions } from '../services/questionService'
 import { API_URL } from '../config.js'
+import { ArrowLeft, Check, Clapperboard, Copy, FileText, Hourglass, LoaderCircle, Mic as MicIcon, PenLine, RefreshCw, Settings, Timer, Trophy, Users, X } from 'lucide-react'
+import { Ico } from '../components/icons'
 
 function RoomDetailPage() {
   const { roomId } = useParams()
@@ -1255,7 +1257,7 @@ function RoomDetailPage() {
       <Sidebar user={user} />
 
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', marginLeft: 'var(--sidebar-width, 240px)', minWidth: 0, maxWidth: 'calc(100vw - var(--sidebar-width, 240px))', overflowX: 'hidden' }}>
-        <PageHeader isMobile={isMobile} icon={room.settings?.mode === 'video' ? '🎬' : '🎙️'} eyebrow={room.endedAt ? 'Teacher console · ended' : 'Teacher console · live'} title={room.name} />
+        <PageHeader isMobile={isMobile} icon={room.settings?.mode === 'video' ? Clapperboard : MicIcon} eyebrow={room.endedAt ? 'Teacher console · ended' : 'Teacher console · live'} title={room.name} />
 
         {/* Content */}
         <div style={{ flex: 1, padding: isMobile ? '16px' : '24px 32px', width: '100%', boxSizing: 'border-box', overflowX: 'hidden' }}>
@@ -1287,9 +1289,10 @@ function RoomDetailPage() {
               border: 'none',
               borderRadius: '8px',
               cursor: 'pointer',
-              fontSize: '18px'
+              fontSize: '18px',
+              display: 'inline-flex', alignItems: 'center', justifyContent: 'center'
             }}>
-              ←
+              <ArrowLeft size={18} aria-hidden="true" />
             </button>
 
             <div data-tour="room-code" style={{
@@ -1313,7 +1316,7 @@ function RoomDetailPage() {
                 fontSize: '12px',
                 cursor: isEnded ? 'not-allowed' : 'pointer'
               }}>
-                {copied ? '✓ Copied' : '📋 Copy'}
+                {copied ? <><Ico as={Check} /> Copied</> : <><Ico as={Copy} /> Copy</>}
               </button>
             </div>
 
@@ -1332,7 +1335,7 @@ function RoomDetailPage() {
                 {totalParticipants}
               </span>
               <span style={{ fontSize: '12px', color: 'var(--text-secondary)', fontWeight: '600', whiteSpace: 'nowrap' }}>
-                👥 Participants
+                <Ico as={Users} /> Participants
               </span>
             </div>
 
@@ -1369,7 +1372,7 @@ function RoomDetailPage() {
                 border: `2px solid ${questionTimeLeft <= 5 ? '#ef4444' : '#10b981'}`
               }}>
                 <span style={{ fontSize: '14px', color: questionTimeLeft <= 5 ? '#ef4444' : '#10b981', fontWeight: '600' }}>
-                  ⏱️ Answer
+                  <Ico as={Timer} /> Answer
                 </span>
                 <span style={{
                   fontSize: '20px',
@@ -1397,7 +1400,7 @@ function RoomDetailPage() {
                 border: '2px solid #ef4444'
               }}>
                 <span style={{ fontSize: '14px', color: '#ef4444', fontWeight: '600' }}>
-                  ⏱️ Time's Up!
+                  <Ico as={Timer} /> Time's Up!
                 </span>
               </div>
             )}
@@ -1421,7 +1424,7 @@ function RoomDetailPage() {
                   gap: '6px'
                 }}
               >
-                📝 Paste & Generate
+                <Ico as={FileText} /> Paste & Generate
               </button>
             )}
 
@@ -1443,7 +1446,7 @@ function RoomDetailPage() {
                   gap: '6px'
                 }}
               >
-                ✍️ Create Q
+                <Ico as={PenLine} /> Create Q
               </button>
             )}
 
@@ -1469,7 +1472,7 @@ function RoomDetailPage() {
                   gap: '6px'
                 }}
               >
-                ⚙️ Settings
+                <Ico as={Settings} /> Settings
               </button>
 
               <RoomSettingsModal
@@ -1788,7 +1791,7 @@ function RoomDetailPage() {
                 borderBottom: '1px solid var(--border-color)'
               }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px', minWidth: 0 }}>
-                  <span style={{ fontSize: '18px' }}>🎙️</span>
+                  <span style={{ fontSize: '18px', display: 'inline-flex', color: 'var(--accent)' }}><MicIcon size={18} aria-hidden="true" /></span>
                   <span style={{ fontSize: '16px', fontWeight: '600', color: 'var(--text-primary)' }}>
                     Current Segment Transcription
                   </span>
@@ -1809,7 +1812,7 @@ function RoomDetailPage() {
                       color: 'var(--text-secondary)',
                       cursor: 'pointer'
                     }}>
-                      ✕ Clear
+                      <Ico as={X} /> Clear
                     </button>
                   )}
                   <button
@@ -1830,7 +1833,7 @@ function RoomDetailPage() {
                       gap: '4px'
                     }}
                   >
-                    {isGeneratingQuestions ? '⏳ Generating...' : '🔄 Generate Q'}
+                    {isGeneratingQuestions ? <><Ico as={Hourglass} /> Generating...</> : <><Ico as={RefreshCw} /> Generate Q</>}
                   </button>
                 </div>
               </div>
@@ -1861,7 +1864,7 @@ function RoomDetailPage() {
             {/* Session Questions - flexible width */}
             <div style={{ flex: isMobile ? '1 1 100%' : '1 1 calc(70% - 10px)', minWidth: isMobile ? 0 : '300px', maxWidth: '100%', background: 'var(--bg-card)', borderRadius: 'var(--radius-lg)', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-md)', padding: '20px', boxSizing: 'border-box', overflow: 'hidden' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
-              <span style={{ fontSize: '20px' }}>📝</span>
+              <span style={{ fontSize: '20px', display: 'inline-flex', color: 'var(--accent)' }}><FileText size={20} aria-hidden="true" /></span>
               <span style={{ fontSize: '16px', fontWeight: '600', color: 'var(--text-primary)' }}>
                 Session Questions
               </span>
@@ -1967,7 +1970,7 @@ function RoomDetailPage() {
                                 {opt.text}
                               </span>
                               {opt.isCorrect && (
-                                <span style={{ marginLeft: 'auto', fontSize: '12px' }}>✓</span>
+                                <span style={{ marginLeft: 'auto', fontSize: '12px', display: 'inline-flex' }}><Check size={14} strokeWidth={2.75} aria-label="Correct" /></span>
                               )}
                             </div>
                           )
@@ -2008,7 +2011,7 @@ function RoomDetailPage() {
             {/* Leaderboard - flexible width */}
             <div style={{ flex: isMobile ? '1 1 100%' : '1 1 calc(30% - 10px)', minWidth: isMobile ? 0 : '280px', maxWidth: '100%', background: 'var(--bg-card)', borderRadius: 'var(--radius-lg)', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-md)', padding: '20px', boxSizing: 'border-box', overflow: 'hidden' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
-                <span style={{ fontSize: '20px' }}>🏆</span>
+                <span style={{ fontSize: '20px', display: 'inline-flex', color: '#f59e0b' }}><Trophy size={20} aria-hidden="true" /></span>
                 <span style={{ fontSize: '16px', fontWeight: '600', color: 'var(--text-primary)' }}>
                   Leaderboard
                 </span>
@@ -2117,8 +2120,9 @@ function RoomDetailPage() {
             <div style={{
               fontSize: '48px',
               marginBottom: '16px',
-              animation: 'spin 1s linear infinite'
-            }}>⏳</div>
+              animation: 'spin 1s linear infinite',
+              display: 'inline-flex', color: 'var(--accent)'
+            }}><LoaderCircle size={48} aria-hidden="true" /></div>
             <h3 style={{
               margin: '0 0 8px',
               color: 'var(--text-primary)',

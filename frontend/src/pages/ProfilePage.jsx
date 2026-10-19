@@ -7,6 +7,8 @@ import { SectionHeader } from '../components/InsightUI'
 import PasswordInput from '../components/PasswordInput'
 import useIsMobile from '../hooks/useIsMobile'
 import { API_URL } from '../config.js'
+import { ArrowLeft, Backpack, Cake, Camera, Check, Circle, FileText, GraduationCap, IdCard, Landmark, Link as LinkIcon, Lock as LockIcon, Mail, MapPin, Pencil, Phone as PhoneIcon, School, ScrollText, ShieldCheck, User, UserRound, VenusAndMars, X } from 'lucide-react'
+import { GithubLogo, Ico, LinkedinLogo, XLogo, renderIcon } from '../components/icons'
 
 function ProfilePage() {
   const navigate = useNavigate()
@@ -300,7 +302,7 @@ function ProfilePage() {
   const notAdded = <span style={{ color: 'var(--text-secondary)', fontWeight: 500, fontStyle: 'italic' }}>Not added</span>
   const Field = ({ icon, label, value, span }) => (
     <div style={{ display: 'flex', gap: 12, alignItems: 'flex-start', gridColumn: span && !isMobile ? 'span 2' : 'auto', minWidth: 0 }}>
-      <span aria-hidden="true" style={{ width: 34, height: 34, flexShrink: 0, borderRadius: 10, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: 15, background: 'color-mix(in srgb, var(--accent) 9%, transparent)' }}>{icon}</span>
+      <span aria-hidden="true" style={{ width: 34, height: 34, flexShrink: 0, borderRadius: 10, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: 15, color: 'var(--accent)', background: 'color-mix(in srgb, var(--accent) 9%, transparent)' }}>{renderIcon(icon, 16)}</span>
       <div style={{ minWidth: 0 }}>
         <p style={{ ...fieldLabelView, textTransform: 'uppercase' }}>{label}</p>
         <p style={fieldValueView}>{value || notAdded}</p>
@@ -355,8 +357,8 @@ function ProfilePage() {
               <input ref={fileInputRef} type="file" accept="image/*" onChange={handleImageUpload} style={{ display: 'none' }} />
               <span aria-hidden="true" onClick={() => fileInputRef.current?.click()} style={{
                 position: 'absolute', bottom: 4, right: 4, width: 30, height: 30, borderRadius: '50%', cursor: 'pointer', fontSize: 14,
-                display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--bg-card)', border: '1px solid var(--border-color)', boxShadow: '0 2px 6px rgba(16,24,40,0.15)'
-              }}>📷</span>
+                display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--bg-card)', border: '1px solid var(--border-color)', boxShadow: '0 2px 6px rgba(16,24,40,0.15)', color: 'var(--text-primary)'
+              }}><Camera size={15} /></span>
             </>
           )}
         </div>
@@ -364,12 +366,12 @@ function ProfilePage() {
           <h2 style={{ margin: 0, fontSize: isMobile ? 20 : 24, fontWeight: 800, letterSpacing: '-0.02em', color: 'var(--text-primary)', wordBreak: 'break-word' }}>{editable ? (formData.name || user?.name) : user?.name}</h2>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap', marginTop: 6 }}>
             <span style={{ padding: '2px 10px', borderRadius: 999, fontSize: 11.5, fontWeight: 700, textTransform: 'capitalize', color: 'var(--accent)', background: 'color-mix(in srgb, var(--accent) 12%, transparent)' }}>{user?.role}</span>
-            <span style={{ fontSize: 13, color: 'var(--text-secondary)', wordBreak: 'break-all' }}>✉️ {user?.email}</span>
+            <span style={{ fontSize: 13, color: 'var(--text-secondary)', wordBreak: 'break-all' }}><Ico as={Mail} /> {user?.email}</span>
           </div>
         </div>
         {!editable && (
           <button data-tour="edit-profile" onClick={() => setIsEditing(true)} style={primaryButton(false, { padding: '10px 18px', alignSelf: isMobile ? 'stretch' : 'auto' })}>
-            ✏️ Edit Profile
+            <Ico as={Pencil} /> Edit Profile
           </button>
         )}
       </div>
@@ -383,24 +385,24 @@ function ProfilePage() {
     <div style={{ display: 'flex', minHeight: '100vh', background: 'var(--bg-primary)', fontFamily: '"Segoe UI", Tahoma, Geneva, Verdana, sans-serif' }}>
       <Sidebar user={user} />
       <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', marginLeft: 'var(--sidebar-width, 240px)' }}>
-        <PageHeader isMobile={isMobile} icon="👤" title="Profile" subtitle="Manage your account details" />
+        <PageHeader isMobile={isMobile} icon={User} title="Profile" subtitle="Manage your account details" />
 
         <div style={{ flex: 1, padding: contentPad, maxWidth: '100%', boxSizing: 'border-box', background: pageWash }}>
           {/* Back arrow + tabs on one line */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 22, flexWrap: 'wrap' }}>
             <button onClick={() => navigate(roleDashboard)} aria-label="Back to dashboard" title="Back to dashboard" style={{
               width: 44, height: 44, flexShrink: 0, borderRadius: 14, border: '1px solid var(--border-color)', background: 'var(--bg-card)',
-              color: 'var(--text-primary)', fontSize: 18, fontWeight: 700, cursor: 'pointer', boxShadow: '0 1px 2px rgba(16,24,40,0.06)'
-            }}>←</button>
+              color: 'var(--text-primary)', fontSize: 18, fontWeight: 700, cursor: 'pointer', boxShadow: '0 1px 2px rgba(16,24,40,0.06)', display: 'inline-flex', alignItems: 'center', justifyContent: 'center'
+            }}><ArrowLeft size={18} aria-hidden="true" /></button>
             <div role="tablist" aria-label="Profile sections" style={{ display: 'inline-flex', gap: 4, padding: 4, borderRadius: 14, background: 'color-mix(in srgb, var(--text-secondary) 10%, var(--bg-card))', border: '1px solid var(--border-color)' }}>
-              {[['profile', '👤 My Profile'], ['password', '🔒 Change Password']].map(([key, text]) => {
+              {[['profile', User, 'My Profile'], ['password', LockIcon, 'Change Password']].map(([key, TabIcon, text]) => {
                 const on = activeTab === key
                 return (
                   <button key={key} role="tab" aria-selected={on} onClick={() => { setActiveTab(key); setIsEditing(false) }} style={{
                     padding: isMobile ? '8px 12px' : '9px 18px', fontSize: isMobile ? '13px' : '14px', fontWeight: on ? 700 : 600, border: 'none', borderRadius: 11, cursor: 'pointer', whiteSpace: 'nowrap',
                     background: on ? 'var(--bg-card)' : 'transparent', color: on ? 'var(--accent)' : 'var(--text-secondary)',
                     boxShadow: on ? '0 1px 2px rgba(16,24,40,0.06), 0 4px 10px rgba(16,24,40,0.06)' : 'none'
-                  }}>{text}</button>
+                  }}><Ico as={TabIcon} /> {text}</button>
                 )
               })}
             </div>
@@ -409,7 +411,7 @@ function ProfilePage() {
           {activeTab === 'password' ? (
             <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'minmax(0, 560px) minmax(240px, 320px)', gap: 20, alignItems: 'start' }}>
               <div data-tour="change-password" style={softCard}>
-                <SectionHeader icon="🔒" title="Change Password" hint="Enter your current password, then choose a new one." />
+                <SectionHeader icon={LockIcon} title="Change Password" hint="Enter your current password, then choose a new one." />
                 {passwordError && <div role="alert" style={errorBanner}>{passwordError}</div>}
                 {passwordSuccess && <div role="status" style={successBanner}>{passwordSuccess}</div>}
 
@@ -431,7 +433,7 @@ function ProfilePage() {
                     )}
                     <ul style={{ listStyle: 'none', margin: '10px 0 0', padding: 0, display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: '4px 12px' }}>
                       {rules.map(([t, ok]) => (
-                        <li key={t} style={{ fontSize: 12.5, color: ok ? '#10b981' : 'var(--text-secondary)', fontWeight: ok ? 600 : 500 }}>{ok ? '✓' : '○'} {t}</li>
+                        <li key={t} style={{ fontSize: 12.5, color: ok ? '#10b981' : 'var(--text-secondary)', fontWeight: ok ? 600 : 500 }}>{ok ? <Ico as={Check} /> : <Ico as={Circle} size="0.8em" />} {t}</li>
                       ))}
                     </ul>
                   </div>
@@ -439,7 +441,7 @@ function ProfilePage() {
                     <L>Confirm New Password</L>
                     <PasswordInput value={passwordData.confirmPassword} onChange={(e) => setPasswordData(p => ({ ...p, confirmPassword: e.target.value }))} placeholder="Confirm new password" />
                     {passwordData.confirmPassword && (
-                      <div style={{ fontSize: 12.5, fontWeight: 600, marginTop: 6, color: matches ? '#10b981' : '#ef4444' }}>{matches ? '✓ Passwords match' : '✕ Passwords do not match yet'}</div>
+                      <div style={{ fontSize: 12.5, fontWeight: 600, marginTop: 6, color: matches ? '#10b981' : '#ef4444' }}>{matches ? <><Ico as={Check} /> Passwords match</> : <><Ico as={X} /> Passwords do not match yet</>}</div>
                     )}
                   </div>
                   <button type="submit" disabled={isPasswordLoading} style={primaryButton(isPasswordLoading, { width: '100%', padding: '13px', fontSize: '15px' })}>
@@ -449,7 +451,7 @@ function ProfilePage() {
               </div>
 
               <div style={softCard}>
-                <SectionHeader icon="🛡️" tint="#10b981" title="Keep your account safe" />
+                <SectionHeader icon={ShieldCheck} tint="#10b981" title="Keep your account safe" />
                 <ul style={{ margin: 0, paddingLeft: 18, display: 'grid', gap: 10, fontSize: 13, color: 'var(--text-secondary)', lineHeight: 1.5 }}>
                   <li>Use a password you don't use on other sites.</li>
                   <li>A short sentence with a number and a symbol is easy to remember and hard to guess.</li>
@@ -467,7 +469,7 @@ function ProfilePage() {
                   <ProfileCover editable />
                   <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: 20, alignItems: 'start' }}>
                     <div style={softCard}>
-                      <SectionHeader icon="🙂" title="Personal information" />
+                      <SectionHeader icon={UserRound} title="Personal information" />
                       <div style={{ display: 'grid', gap: 16 }}>
                         <div><L htmlFor="pf-name">Full Name</L><input id="pf-name" className="app-input" type="text" value={formData.name} onChange={(e) => handleChange('name', e.target.value)} style={inp()} /></div>
                         <div style={twoCol}>
@@ -486,7 +488,7 @@ function ProfilePage() {
 
                     <div style={{ display: 'grid', gap: 20 }}>
                       <div style={softCard}>
-                        <SectionHeader icon={user?.role === 'teacher' ? '🎓' : '🎒'} title={roleLabel} />
+                        <SectionHeader icon={user?.role === 'teacher' ? GraduationCap : Backpack} title={roleLabel} />
                         {user?.role === 'student' ? (
                           <div style={twoCol}>
                             <div><L htmlFor="pf-enr">Enrollment Number</L><input id="pf-enr" className="app-input" type="text" value={formData.enrollmentNumber} onChange={(e) => handleChange('enrollmentNumber', e.target.value)} placeholder="2021BCS001" style={inp()} /></div>
@@ -503,7 +505,7 @@ function ProfilePage() {
                         )}
                       </div>
                       <div style={softCard}>
-                        <SectionHeader icon="🔗" title="Social links" />
+                        <SectionHeader icon={LinkIcon} title="Social links" />
                         <div style={{ display: 'grid', gap: 14 }}>
                           <div><L htmlFor="pf-tw">Twitter / X</L><input id="pf-tw" className="app-input" type="text" value={formData.socialLinks.twitter} onChange={(e) => handleChange('socialLinks.twitter', e.target.value)} placeholder="@username" style={inp()} /></div>
                           <div><L htmlFor="pf-li">LinkedIn</L><input id="pf-li" className="app-input" type="text" value={formData.socialLinks.linkedin} onChange={(e) => handleChange('socialLinks.linkedin', e.target.value)} placeholder="linkedin.com/in/username" style={inp()} /></div>
@@ -513,7 +515,7 @@ function ProfilePage() {
                     </div>
 
                     <div style={{ ...softCard, gridColumn: isMobile ? 'auto' : 'span 2' }}>
-                      <SectionHeader icon="📍" title="Address" />
+                      <SectionHeader icon={MapPin} title="Address" />
                       <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '2fr 1fr 1fr', gap: 16 }}>
                         <div><L htmlFor="pf-st">Street</L><input id="pf-st" className="app-input" type="text" value={formData.address.street} onChange={(e) => handleChange('address.street', e.target.value)} placeholder="123 Main Street" style={inp()} /></div>
                         <div><L htmlFor="pf-city">City</L><input id="pf-city" className="app-input" type="text" value={formData.address.city} onChange={(e) => handleChange('address.city', e.target.value)} placeholder="Mumbai" style={inp()} /></div>
@@ -535,34 +537,34 @@ function ProfilePage() {
                   <ProfileCover />
                   <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: 20, alignItems: 'start' }}>
                     <div style={softCard}>
-                      <SectionHeader icon="🙂" title="Personal information" />
+                      <SectionHeader icon={UserRound} title="Personal information" />
                       <div style={fieldGrid}>
-                        <Field icon="📞" label="Phone" value={formData.phone} />
-                        <Field icon="⚧" label="Gender" value={formData.gender && <span style={{ textTransform: 'capitalize' }}>{formData.gender}</span>} />
-                        <Field icon="🎂" label="Date of birth" value={formData.dateOfBirth ? new Date(formData.dateOfBirth).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }) : ''} />
-                        <Field icon="📝" label="Bio" value={formData.bio} span />
+                        <Field icon={PhoneIcon} label="Phone" value={formData.phone} />
+                        <Field icon={VenusAndMars} label="Gender" value={formData.gender && <span style={{ textTransform: 'capitalize' }}>{formData.gender}</span>} />
+                        <Field icon={Cake} label="Date of birth" value={formData.dateOfBirth ? new Date(formData.dateOfBirth).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }) : ''} />
+                        <Field icon={FileText} label="Bio" value={formData.bio} span />
                       </div>
                     </div>
                     <div style={softCard}>
-                      <SectionHeader icon={user?.role === 'teacher' ? '🎓' : '🎒'} title={roleLabel} />
+                      <SectionHeader icon={user?.role === 'teacher' ? GraduationCap : Backpack} title={roleLabel} />
                       <div style={fieldGrid}>
                         {user?.role === 'student' ? (
                           <>
-                            <Field icon="🆔" label="Enrollment number" value={formData.enrollmentNumber} />
-                            <Field icon="🏫" label="Class / section" value={formData.class} />
+                            <Field icon={IdCard} label="Enrollment number" value={formData.enrollmentNumber} />
+                            <Field icon={School} label="Class / section" value={formData.class} />
                           </>
                         ) : (
                           <>
-                            <Field icon="🆔" label="Employee ID" value={formData.employeeId} />
-                            <Field icon="🏛️" label="Department" value={formData.department} />
-                            <Field icon="📜" label="Qualifications" value={formData.qualifications} span />
+                            <Field icon={IdCard} label="Employee ID" value={formData.employeeId} />
+                            <Field icon={Landmark} label="Department" value={formData.department} />
+                            <Field icon={ScrollText} label="Qualifications" value={formData.qualifications} span />
                           </>
                         )}
                       </div>
                     </div>
                     {hasAddress && (
                       <div style={softCard}>
-                        <SectionHeader icon="📍" title="Address" />
+                        <SectionHeader icon={MapPin} title="Address" />
                         <p style={{ margin: 0, fontSize: 15, fontWeight: 600, color: 'var(--text-primary)', lineHeight: 1.6 }}>
                           {[formData.address.street, [formData.address.city, formData.address.state].filter(Boolean).join(', '), [formData.address.zipCode, formData.address.country].filter(Boolean).join(' · ')].filter(Boolean).map((line, i) => <span key={i} style={{ display: 'block' }}>{line}</span>)}
                         </p>
@@ -570,11 +572,11 @@ function ProfilePage() {
                     )}
                     {hasSocial && (
                       <div style={softCard}>
-                        <SectionHeader icon="🔗" title="Social links" />
+                        <SectionHeader icon={LinkIcon} title="Social links" />
                         <div style={{ display: 'grid', gap: 14 }}>
-                          {formData.socialLinks.twitter && <Field icon="𝕏" label="Twitter / X" value={formData.socialLinks.twitter} />}
-                          {formData.socialLinks.linkedin && <Field icon="💼" label="LinkedIn" value={formData.socialLinks.linkedin} />}
-                          {formData.socialLinks.github && <Field icon="🐙" label="GitHub" value={formData.socialLinks.github} />}
+                          {formData.socialLinks.twitter && <Field icon={<XLogo size={16} aria-hidden="true" style={{ color: 'var(--text-primary)' }} />} label="Twitter / X" value={formData.socialLinks.twitter} />}
+                          {formData.socialLinks.linkedin && <Field icon={<LinkedinLogo size={16} aria-hidden="true" style={{ color: 'color-mix(in srgb, #0A66C2, white var(--tone-lift))' }} />} label="LinkedIn" value={formData.socialLinks.linkedin} />}
+                          {formData.socialLinks.github && <Field icon={<GithubLogo size={16} aria-hidden="true" style={{ color: 'var(--text-primary)' }} />} label="GitHub" value={formData.socialLinks.github} />}
                         </div>
                       </div>
                     )}

@@ -9,6 +9,7 @@ import useIsMobile from '../hooks/useIsMobile'
 import useNow from '../hooks/useNow'
 import { PageHeader, pageWash, greeting, dateLabel, LiveClock, inputStyle, primaryButton, RoomCard, Pill, EmptyState } from '../components/AppUI'
 import { StatTile, TileGrid, SectionLabel, SectionHeader, cardStyle } from '../components/InsightUI'
+import { CircleCheck, Clapperboard, GraduationCap, Library, Link as LinkIcon, Mic, SkipForward, Telescope, TrendingUp } from 'lucide-react'
 
 function StudentDashboard() {
   const isMobile = useIsMobile()
@@ -95,7 +96,7 @@ function StudentDashboard() {
         marginLeft: 'var(--sidebar-width, 240px)',
         transition: 'margin-left 0.2s ease'
       }}>
-        <PageHeader isMobile={isMobile} icon="🎓" eyebrow={<>{dateLabel(now)} · <LiveClock /></>}
+        <PageHeader isMobile={isMobile} icon={GraduationCap} eyebrow={<>{dateLabel(now)} · <LiveClock /></>}
           title={`${greeting(now)}, ${firstName}!`} subtitle="Join rooms and participate in polls" />
 
         {/* Dashboard content */}
@@ -103,10 +104,10 @@ function StudentDashboard() {
           <SectionLabel>Your progress</SectionLabel>
           <TileGrid isMobile={isMobile} cols={4} tour="stats">
             {[
-              { icon: '📚', label: 'Rooms joined', value: stats.totalRooms, sub: 'sessions attended', tint: 'var(--accent)' },
-              { icon: '✅', label: 'Polls taken', value: stats.pollsTaken, sub: totalPolls ? `of ${totalPolls} polls` : 'answered so far', tint: '#10b981', progress: totalPolls ? (stats.pollsTaken / totalPolls) * 100 : undefined },
-              { icon: '⏭️', label: 'Polls missed', value: stats.pollsMissed, sub: stats.pollsMissed ? 'not answered in time' : 'none missed', tint: '#ef4444' },
-              { icon: '📈', label: 'Earned points', value: `${stats.average}%`, sub: 'of the points available', tint: '#8b5cf6', progress: stats.average },
+              { icon: Library, label: 'Rooms joined', value: stats.totalRooms, sub: 'sessions attended', tint: 'var(--accent)' },
+              { icon: CircleCheck, label: 'Polls taken', value: stats.pollsTaken, sub: totalPolls ? `of ${totalPolls} polls` : 'answered so far', tint: '#10b981', progress: totalPolls ? (stats.pollsTaken / totalPolls) * 100 : undefined },
+              { icon: SkipForward, label: 'Polls missed', value: stats.pollsMissed, sub: stats.pollsMissed ? 'not answered in time' : 'none missed', tint: '#ef4444' },
+              { icon: TrendingUp, label: 'Earned points', value: `${stats.average}%`, sub: 'of the points available', tint: '#8b5cf6', progress: stats.average },
             ].map(t => <StatTile key={t.label} {...t} isMobile={isMobile} />)}
           </TileGrid>
 
@@ -117,7 +118,7 @@ function StudentDashboard() {
             background: 'linear-gradient(135deg, color-mix(in srgb, var(--accent) 10%, var(--bg-card)) 0%, color-mix(in srgb, #8b5cf6 7%, var(--bg-card)) 100%)',
             border: '1px solid color-mix(in srgb, var(--accent) 22%, var(--border-color))'
           }}>
-            <SectionHeader icon="🔗" title="Quick Join" hint="Enter the room code your teacher shared to join the live session." />
+            <SectionHeader icon={LinkIcon} title="Quick Join" hint="Enter the room code your teacher shared to join the live session." />
             <div style={{ display: 'flex', gap: '12px', flexDirection: isMobile ? 'column' : 'row' }}>
               <input
                 type="text"
@@ -143,7 +144,7 @@ function StudentDashboard() {
               {activeRooms.map((room) => (
                 <RoomCard
                   key={room._id}
-                  icon={room.settings?.mode === 'video' ? '🎬' : '🎙️'}
+                  icon={room.settings?.mode === 'video' ? Clapperboard : Mic}
                   tint={room.settings?.mode === 'video' ? '#ec4899' : 'var(--accent)'}
                   title={room.name}
                   code={room.code}
@@ -155,7 +156,7 @@ function StudentDashboard() {
               ))}
             </div>
           ) : (
-            <EmptyState icon="🔭" title="No active rooms right now" description="When your teacher starts a session, enter its code above. Rooms you join stay here while they are live." />
+            <EmptyState icon={Telescope} title="No active rooms right now" description="When your teacher starts a session, enter its code above. Rooms you join stay here while they are live." />
           )}
         </div>
       </div>

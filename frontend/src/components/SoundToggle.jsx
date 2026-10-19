@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { Bell, BellOff } from 'lucide-react'
 import { isSoundEnabled, setSoundEnabled, unlockAudio, playPreview, SOUND_CHANGE_EVENT } from '../lib/sounds'
 
 // Bell button that mutes/unmutes the attention chimes on this device (per browser, default on).
@@ -44,7 +45,7 @@ export default function SoundToggle({ style = {} }) {
         ...style
       }}
     >
-      {enabled ? '🔔' : '🔕'}
+      {enabled ? <Bell size={18} aria-hidden="true" /> : <BellOff size={18} aria-hidden="true" />}
     </button>
   )
 }

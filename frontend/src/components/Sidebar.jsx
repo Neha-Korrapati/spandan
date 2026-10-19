@@ -1,18 +1,20 @@
 import React, { useState, useEffect, useLayoutEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import SpandanIcon from './SpandanIcon'
+import { LayoutDashboard, Plus, Settings, History as HistoryIcon, Link as LinkIcon, ShieldCheck, Menu, X } from 'lucide-react'
+import { renderIcon } from './icons'
 
 const menuItems = {
   teacher: [
-    { id: 'dashboard', label: 'Dashboard', icon: '📊', path: '/teacher' },
-    { id: 'create-room', label: 'Create Room', icon: '＋', path: '/teacher/create-room' },
-    { id: 'manage-room', label: 'Manage Room', icon: '⚙️', path: '/teacher/manage-room' },
-    { id: 'room-history', label: 'Room History', icon: '📜', path: '/teacher/room-history' },
+    { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard, path: '/teacher' },
+    { id: 'create-room', label: 'Create Room', icon: Plus, path: '/teacher/create-room' },
+    { id: 'manage-room', label: 'Manage Room', icon: Settings, path: '/teacher/manage-room' },
+    { id: 'room-history', label: 'Room History', icon: HistoryIcon, path: '/teacher/room-history' },
   ],
   student: [
-    { id: 'dashboard', label: 'Dashboard', icon: '📊', path: '/student' },
-    { id: 'join-room', label: 'Join Room', icon: '🔗', path: '/student/join-room' },
-    { id: 'room-history', label: 'Room History', icon: '📜', path: '/student/room-history' },
+    { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard, path: '/student' },
+    { id: 'join-room', label: 'Join Room', icon: LinkIcon, path: '/student/join-room' },
+    { id: 'room-history', label: 'Room History', icon: HistoryIcon, path: '/student/room-history' },
   ]
 }
 
@@ -31,7 +33,7 @@ export default function Sidebar({ user }) {
   // lives in the ⓘ drawer in every page header.)
   let items = baseItems
   if (user?.isAdmin) {
-    items = [...baseItems, { id: 'admin', label: 'Approvals', icon: '🛡️', path: '/admin' }]
+    items = [...baseItems, { id: 'admin', label: 'Approvals', icon: ShieldCheck, path: '/admin' }]
   }
 
   const [isMobile, setIsMobile] = useState(() =>
@@ -92,7 +94,7 @@ export default function Sidebar({ user }) {
             border: 'none', borderRadius: '13px', cursor: 'pointer', fontSize: '18px',
             boxShadow: '0 6px 16px rgba(8,32,73,0.35)'
           }}
-        >☰</button>
+        ><Menu size={20} aria-hidden="true" /></button>
       )}
 
       {/* Backdrop — mobile drawer open */}
@@ -156,7 +158,7 @@ export default function Sidebar({ user }) {
               </div>
             )}
           </div>
-          {isMobile && iconBtn(() => setMobileOpen(false), 'Close menu', '✕')}
+          {isMobile && iconBtn(() => setMobileOpen(false), 'Close menu', <X size={16} aria-hidden="true" />)}
         </div>
 
         {/* Navigation */}
@@ -190,7 +192,7 @@ export default function Sidebar({ user }) {
                   width: 32, height: 32, flexShrink: 0, borderRadius: 10, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: 16,
                   background: isActive ? 'var(--bg-card)' : 'color-mix(in srgb, var(--text-secondary) 8%, transparent)',
                   boxShadow: isActive ? '0 2px 6px rgba(16,24,40,0.10)' : 'none'
-                }}>{item.icon}</span>
+                }}>{renderIcon(item.icon, 18)}</span>
                 {showLabels && <span style={{ whiteSpace: 'nowrap' }}>{item.label}</span>}
               </button>
             )

@@ -5,12 +5,14 @@
 // Each section: { id, role: 'teacher' | 'student' | 'both', icon, title, ordered?, adminOnly?,
 //                 routes: [RegExp] (pathnames this section is the best match for), body: [string] }
 
+import { CircleCheck, CircleHelp, Clapperboard, ClipboardPaste, Hand, History as HistoryIcon, KeyRound, LayoutDashboard, Link as LinkIcon, Maximize, Mic, PenLine, Plus, Rocket, Settings as SettingsIcon, ShieldCheck, SlidersHorizontal, TrendingUp, Trophy, User as UserIcon, UserPlus } from 'lucide-react'
+
 const T = 'teacher', S = 'student', B = 'both', G = 'guest'  // G = signed-out landing page
 
 export const HELP_SECTIONS = [
   // ───────────────────────────── Landing page (signed out) ─────────────────────────────
   {
-    id: 'guest-welcome', role: G, icon: '👋', title: 'What is Spandan?',
+    id: 'guest-welcome', role: G, icon: Hand, title: 'What is Spandan?',
     routes: [/^\/?$/],
     body: [
       'Spandan is a live classroom polling platform. As a teacher lectures, it transcribes the lecture, turns each segment into poll questions, and sends the ones the teacher approves to every student\'s screen. Students answer against a timer and climb a live leaderboard.',
@@ -19,18 +21,18 @@ export const HELP_SECTIONS = [
     ],
   },
   {
-    id: 'guest-register', role: G, icon: '📝', title: 'Create an account', ordered: true,
+    id: 'guest-register', role: G, icon: UserPlus, title: 'Create an account', ordered: true,
     routes: [],
     body: [
       'On the Create Account card fill in your Full Name, Email Address and a Password (at least 8 characters with an upper-case letter, a lower-case letter, a digit and a symbol), then confirm the password.',
-      'Under "Want to…" choose your role: 🎓 Learn if you will join sessions as a student, or 🧑‍🏫 Teach if you will run them.',
+      'Under "Want to…" choose your role: Learn if you will join sessions as a student, or Teach if you will run them.',
       'Click Create Account. A verification code is emailed to you; enter it on the next screen (you can request a new one after 60 seconds). Your account is created and you are signed in.',
       'Teach role: your account also needs admin approval before you can sign in and create rooms. Until an admin approves it, teacher features stay locked. The Learn role is active immediately.',
       'Prefer one click? Continue with Google creates the account from your Google identity (Teach accounts still need approval).',
     ],
   },
   {
-    id: 'guest-signin', role: G, icon: '🔑', title: 'Sign in',
+    id: 'guest-signin', role: G, icon: KeyRound, title: 'Sign in',
     routes: [],
     body: [
       'Already registered? Click Sign in, enter your email and password, and you land on your dashboard (teachers) or your join screen (students).',
@@ -42,7 +44,7 @@ export const HELP_SECTIONS = [
 
   // ───────────────────────────── Teacher ─────────────────────────────
   {
-    id: 'getting-started', role: T, icon: '🚀', title: 'Getting started',
+    id: 'getting-started', role: T, icon: Rocket, title: 'Getting started',
     routes: [],
     body: [
       'Spandan listens to your lecture, transcribes it in real time, and turns each segment into poll questions. You approve them with one click, they appear on every student\'s screen, students answer against a timer, and a live leaderboard and end-of-session analytics follow.',
@@ -53,7 +55,7 @@ export const HELP_SECTIONS = [
     ],
   },
   {
-    id: 'dashboard', role: T, icon: '📊', title: 'The teacher dashboard',
+    id: 'dashboard', role: T, icon: LayoutDashboard, title: 'The teacher dashboard',
     routes: [/^\/teacher\/?$/, /^\/teacher\/manage-room\/?$/],
     body: [
       'After signing in you land on the dashboard. Four cards summarise your activity: Total Rooms, Active Rooms, Total Polls and Total Responses.',
@@ -62,7 +64,7 @@ export const HELP_SECTIONS = [
     ],
   },
   {
-    id: 'creating-a-room', role: T, icon: '＋', title: 'Creating a room',
+    id: 'creating-a-room', role: T, icon: Plus, title: 'Creating a room',
     routes: [/^\/teacher\/create-room\/?$/],
     body: [
       'A room is one live session that students join. Create one from the dashboard panel or the Create Room page.',
@@ -72,17 +74,17 @@ export const HELP_SECTIONS = [
     ],
   },
   {
-    id: 'live-console', role: T, icon: '🎛️', title: 'The live session console',
+    id: 'live-console', role: T, icon: SlidersHorizontal, title: 'The live session console',
     routes: [/^\/teacher\/room\/[^/]+\/?$/],
     body: [
-      'This is your control room during a session. Top row: the room Code with 📋 Copy, the live Participants count, then 📝 Paste & Generate, ✍️ Create Q, 🔔 (chime on/off for this device), ⚙️ Settings and End Room.',
-      'Below: the green microphone (Start Recording) in Normal mode, or the embedded video with "Start Session (share this tab\'s audio)" in Video mode; the Current Segment Transcription panel with 🔄 Generate Q; Session Questions (everything asked so far); and the live Leaderboard.',
+      'This is your control room during a session. Top row: the room Code with Copy, the live Participants count, then Paste & Generate, Create Q, the bell (chime on/off for this device), Settings and End Room.',
+      'Below: the green microphone (Start Recording) in Normal mode, or the embedded video with "Start Session (share this tab\'s audio)" in Video mode; the Current Segment Transcription panel with Generate Q; Session Questions (everything asked so far); and the live Leaderboard.',
       'The small summary under the microphone (Provider, Time/Answer, Points, Segment Time, Questions/Segment, Difficulty) shows your current settings at a glance.',
       'Adjust Settings before you start recording. End Room closes the session for everyone and compiles the results.',
     ],
   },
   {
-    id: 'room-settings', role: T, icon: '⚙️', title: 'Room settings (the "Settings" button)',
+    id: 'room-settings', role: T, icon: SettingsIcon, title: 'Room settings (the "Settings" button)',
     routes: [],
     body: [
       'Segment Time — how long each lecture/video segment runs before questions are generated from it (any whole number of minutes from 1 to 15; default 2). Shorter segments = more frequent polls.',
@@ -97,17 +99,17 @@ export const HELP_SECTIONS = [
     ],
   },
   {
-    id: 'normal-mode', role: T, icon: '🎙️', title: 'Normal mode: recording & transcription', ordered: true,
+    id: 'normal-mode', role: T, icon: Mic, title: 'Normal mode: recording & transcription', ordered: true,
     routes: [],
     body: [
       'Click the green microphone to Start Recording and allow microphone access if prompted. The button turns into a red Listening… indicator with a LIVE badge and the segment timer starts counting down.',
       'As you speak, your words stream into Current Segment Transcription in real time.',
-      'When the segment timer ends, Spandan automatically generates questions from that segment using your Settings (count, difficulty, type mix). Press 🔄 Generate Q to do it on demand for the current segment.',
+      'When the segment timer ends, Spandan automatically generates questions from that segment using your Settings (count, difficulty, type mix). Press Generate Q to do it on demand for the current segment.',
       'Speak clearly and let a full segment run before generating — the more coherent the transcript, the better the questions.',
     ],
   },
   {
-    id: 'video-mode', role: T, icon: '🎬', title: 'Video mode (YouTube / live stream)', ordered: true,
+    id: 'video-mode', role: T, icon: Clapperboard, title: 'Video mode (YouTube / live stream)', ordered: true,
     routes: [],
     body: [
       'Create the room in Video mode and paste a YouTube video or live-stream link — or change it later with "Edit link" on the console.',
@@ -117,37 +119,37 @@ export const HELP_SECTIONS = [
     ],
   },
   {
-    id: 'reviewing-launching', role: T, icon: '✅', title: 'Reviewing & launching questions',
+    id: 'reviewing-launching', role: T, icon: CircleCheck, title: 'Reviewing & launching questions',
     routes: [],
     body: [
-      'No question reaches students until you approve it. When a generated batch is ready, a five-second chime rings, students hear their own chime at the same moment, and the Question Approval dialog opens. If you are on another tab, the browser tab title flashes "(!) Questions ready". The 🔔 button mutes the chime on this device.',
-      'In the dialog: read the question and options (the correct one is marked CORRECT), read the Explanation, click ✏️ Edit to fix wording or the answer, ✕ Reject to discard a weak question, or ✓ Approve & Launch to push it to students instantly.',
+      'No question reaches students until you approve it. When a generated batch is ready, a five-second chime rings, students hear their own chime at the same moment, and the Question Approval dialog opens. If you are on another tab, the browser tab title flashes "(!) Questions ready". The bell button mutes the chime on this device.',
+      'In the dialog: read the question and options (the correct one is marked CORRECT), read the Explanation, click Edit to fix wording or the answer, Reject to discard a weak question, or Approve & Launch to push it to students instantly.',
       'Batch review: numbered tabs (Q1, Q2 …) step through each generated question; the progress bar tracks how far through the batch you are.',
       'Launched questions appear on every student\'s screen with the Time to Answer countdown; answers arrive live and the leaderboard updates as they do.',
     ],
   },
   {
-    id: 'paste-generate', role: T, icon: '📋', title: 'Paste & Generate (from your own text)', ordered: true,
+    id: 'paste-generate', role: T, icon: ClipboardPaste, title: 'Paste & Generate (from your own text)', ordered: true,
     routes: [],
     body: [
-      'Use 📝 Paste & Generate to create questions from text you already have — lecture notes, a textbook passage, an article — without lecturing live.',
+      'Use Paste & Generate to create questions from text you already have — lecture notes, a textbook passage, an article — without lecturing live.',
       'Paste the content (at least 50 characters) and choose a Question Mode: True/False Only, or Mixed (MCQ + TF + MSQ).',
       'Your room settings (difficulty, points, TTA, count) are applied automatically. Click Generate Questions.',
       'A chime rings when the batch is ready (students hear theirs too); review each question just like the live flow — Reject, or Launch to Class, then Next Question.',
     ],
   },
   {
-    id: 'create-q', role: T, icon: '✍️', title: 'Create Q (write your own question)', ordered: true,
+    id: 'create-q', role: T, icon: PenLine, title: 'Create Q (write your own question)', ordered: true,
     routes: [],
     body: [
-      'Use ✍️ Create Q when you want full control and no AI — you write the question yourself. (No chime for this one; it is your own typing.)',
+      'Use Create Q when you want full control and no AI — you write the question yourself. (No chime for this one; it is your own typing.)',
       'Pick a Question Type: Single Answer (MCQ), True/False, or Multi Answer (MSQ).',
       'Type the question, add the options with + Add Option, mark the correct one(s), set Time to Answer and Points.',
-      'Click 🚀 Launch Question to send it straight to students with the answer timer.',
+      'Click Launch Question to send it straight to students with the answer timer.',
     ],
   },
   {
-    id: 'leaderboard-teacher', role: T, icon: '🏆', title: 'The live leaderboard',
+    id: 'leaderboard-teacher', role: T, icon: Trophy, title: 'The live leaderboard',
     routes: [],
     body: [
       'Students are ranked by points: correctness plus speed (faster correct answers earn more).',
@@ -156,7 +158,7 @@ export const HELP_SECTIONS = [
     ],
   },
   {
-    id: 'results', role: T, icon: '📈', title: 'Results & analytics',
+    id: 'results', role: T, icon: TrendingUp, title: 'Results & analytics',
     routes: [/^\/teacher\/room\/[^/]+\/results\/?$/],
     body: [
       'When you click End Room, Spandan compiles the session results. Reopen them any time from Room History → View Results.',
@@ -166,21 +168,21 @@ export const HELP_SECTIONS = [
       'Correct rate per question (sorted) and Speed vs accuracy (median response time against correct rate: slow-and-wrong = the class struggled, fast-and-wrong = a misconception). By lecture segment shows where the class got lost.',
       'Question-wise analysis: every question with difficulty (share correct), discrimination (point-biserial — above 0.3 good, below 0.2 weak), median time and flags (too easy, hard, low discrimination, dead distractor). Click a row for the answer distribution, the explanation and who got it wrong.',
       'Students × questions heatmap: one cell per student per question (correct, wrong, no answer), sorted by points.',
-      '⬇ Download questions exports every question with its options as PDF (via the print dialog → Save as PDF) or CSV, either as an Answer key (✓ on correct options, explanations, stats) or a Student copy (a handout without answers). ⬇ Responses CSV downloads every answer.',
+      'Download questions exports every question with its options as PDF (via the print dialog → Save as PDF) or CSV, either as an Answer key (✓ on correct options, explanations, stats) or a Student copy (a handout without answers). Responses CSV downloads every answer.',
       'Each student gets a personal results page: their rank (hidden when the leaderboard is anonymous), points, correct rate and median time against the class, and a per-question breakdown with their own answer highlighted. No other student is named.',
     ],
   },
   {
-    id: 'history-export', role: T, icon: '📜', title: 'Room history & exporting data',
+    id: 'history-export', role: T, icon: HistoryIcon, title: 'Room history & exporting data',
     routes: [/^\/teacher\/room-history\/?$/],
     body: [
       'Room History lists every ended session as a card, newest first, with its code and end date.',
-      'View Results → reopens the full analytics for that session. ⬇ CSV downloads the session\'s responses as a spreadsheet for your own records or grading.',
+      'View Results → reopens the full analytics for that session. CSV downloads the session\'s responses as a spreadsheet for your own records or grading.',
       'Tip: use the CSV export to keep an offline gradebook or to analyse participation across many sessions.',
     ],
   },
   {
-    id: 'approvals', role: T, icon: '🛡️', title: 'Approving teachers (admins)', adminOnly: true,
+    id: 'approvals', role: T, icon: ShieldCheck, title: 'Approving teachers (admins)', adminOnly: true,
     routes: [/^\/admin\/?$/],
     body: [
       'New Teach-role sign-ups wait in Approvals until an admin approves them; until then they cannot sign in.',
@@ -190,16 +192,16 @@ export const HELP_SECTIONS = [
 
   // ───────────────────────────── Student ─────────────────────────────
   {
-    id: 's-getting-started', role: S, icon: '🚀', title: 'Getting started',
+    id: 's-getting-started', role: S, icon: Rocket, title: 'Getting started',
     routes: [],
     body: [
       'Spandan is where your teacher\'s live poll questions appear. You join a session with a short code, answer each question against a timer, and watch your place on the leaderboard.',
-      'Create an account with the 🎓 Learn role (active immediately) or sign in with Google. Use the Dark / Light button top-right to switch theme.',
+      'Create an account with the Learn role (active immediately) or sign in with Google. Use the Dark / Light button top-right to switch theme.',
       'Help is always one click away: the ⓘ button in the header opens this guide on the section for the page you are on, with search. Press ? to open it too. Every page has a short guided tour that runs on your first visit; replay it with "Take this page\'s tour" at the top of this popup.',
     ],
   },
   {
-    id: 's-dashboard', role: S, icon: '📊', title: 'Your dashboard',
+    id: 's-dashboard', role: S, icon: LayoutDashboard, title: 'Your dashboard',
     routes: [/^\/student\/?$/],
     body: [
       'The Quick Join box on your dashboard takes a room code and drops you straight into the session.',
@@ -207,7 +209,7 @@ export const HELP_SECTIONS = [
     ],
   },
   {
-    id: 'joining', role: S, icon: '🔗', title: 'Joining a room', ordered: true,
+    id: 'joining', role: S, icon: LinkIcon, title: 'Joining a room', ordered: true,
     routes: [/^\/student\/join-room\/?$/],
     body: [
       'Get the six-letter room code from your teacher.',
@@ -216,17 +218,17 @@ export const HELP_SECTIONS = [
     ],
   },
   {
-    id: 'answering', role: S, icon: '❓', title: 'Answering questions', ordered: true,
+    id: 'answering', role: S, icon: CircleHelp, title: 'Answering questions', ordered: true,
     routes: [/^\/student\/session\/[^/]+\/?$/],
     body: [
-      'When the teacher\'s questions are ready, a five-second chime rings so you know it is question time (once per segment). If your browser blocked the sound, tap "Enable sound" once; the 🔔 button next to Leave mutes it on this device.',
+      'When the teacher\'s questions are ready, a five-second chime rings so you know it is question time (once per segment). If your browser blocked the sound, tap "Enable sound" once; the bell button next to Leave mutes it on this device.',
       'When the teacher launches a poll, the question takes over your screen with a large countdown (the teacher\'s Time to Answer).',
-      'Pick your answer: MCQ and True/False want one choice; MSQ (multiple-select) wants every correct option — select all that apply. It locks in and ✓ Answer Submitted appears.',
+      'Pick your answer: MCQ and True/False want one choice; MSQ (multiple-select) wants every correct option — select all that apply. It locks in and Answer Submitted appears.',
       'Answer before the timer runs out — points reward both correctness and speed. Between questions you see Waiting for Next Question with your Past Questions and the Leaderboard.',
     ],
   },
   {
-    id: 'video-mode-rooms', role: S, icon: '🎬', title: 'Video-mode rooms',
+    id: 'video-mode-rooms', role: S, icon: Clapperboard, title: 'Video-mode rooms',
     routes: [],
     body: [
       'Some rooms play a YouTube video or live stream inside the page instead of the teacher speaking. Just watch along.',
@@ -236,7 +238,7 @@ export const HELP_SECTIONS = [
     ],
   },
   {
-    id: 'fullscreen', role: S, icon: '⛶', title: 'Full screen & answering',
+    id: 'fullscreen', role: S, icon: Maximize, title: 'Full screen & answering',
     routes: [],
     body: [
       'You can make the video full screen to watch it larger.',
@@ -245,7 +247,7 @@ export const HELP_SECTIONS = [
     ],
   },
   {
-    id: 's-leaderboard', role: S, icon: '🏆', title: 'Leaderboard',
+    id: 's-leaderboard', role: S, icon: Trophy, title: 'Leaderboard',
     routes: [],
     body: [
       'Your score builds up across the whole session from your correct answers and how quickly you answer.',
@@ -254,7 +256,7 @@ export const HELP_SECTIONS = [
     ],
   },
   {
-    id: 's-results', role: S, icon: '📈', title: 'Your results',
+    id: 's-results', role: S, icon: TrendingUp, title: 'Your results',
     routes: [/^\/student\/room\/[^/]+\/results\/?$/],
     body: [
       'When the teacher ends the room you are taken to your personal results. The tiles at the top show your rank (hidden if the leaderboard is anonymous), points, correct rate, median time, best streak and how many questions you answered, each next to the class figure.',
@@ -263,7 +265,7 @@ export const HELP_SECTIONS = [
     ],
   },
   {
-    id: 's-history', role: S, icon: '📜', title: 'Room history',
+    id: 's-history', role: S, icon: HistoryIcon, title: 'Room history',
     routes: [/^\/student\/room-history\/?$/],
     body: [
       'Room History lists the sessions you have taken part in, newest first. View Results reopens your personal results for that session.',
@@ -272,7 +274,7 @@ export const HELP_SECTIONS = [
 
   // ───────────────────────────── Both ─────────────────────────────
   {
-    id: 'account-profile', role: B, icon: '👤', title: 'Your profile & account',
+    id: 'account-profile', role: B, icon: UserIcon, title: 'Your profile & account',
     routes: [/^\/(teacher|student)\/profile\/?$/],
     body: [
       'Open your profile from the avatar menu top-right. You can update your name, photo, contact details, bio and (for teachers) department, employee ID and qualifications.',

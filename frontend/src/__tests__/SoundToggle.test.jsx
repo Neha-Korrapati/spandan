@@ -18,17 +18,17 @@ describe('SoundToggle', () => {
   it('shows the bell when on, mutes on click, and previews when turned back on', async () => {
     render(<SoundToggle />)
     const btn = screen.getByRole('button')
-    expect(btn).toHaveTextContent('🔔')
     expect(btn).toHaveAttribute('aria-pressed', 'true')
+    expect(btn).toHaveAccessibleName(/Sound on/)
 
     fireEvent.click(btn)
     expect(setSoundEnabled).toHaveBeenLastCalledWith(false)
-    await waitFor(() => expect(btn).toHaveTextContent('🔕'))
+    await waitFor(() => expect(btn).toHaveAttribute('aria-pressed', 'false'))
     expect(playPreview).not.toHaveBeenCalled()
 
     fireEvent.click(btn)
     expect(setSoundEnabled).toHaveBeenLastCalledWith(true)
-    await waitFor(() => expect(btn).toHaveTextContent('🔔'))
+    await waitFor(() => expect(btn).toHaveAttribute('aria-pressed', 'true'))
     await waitFor(() => expect(unlockAudio).toHaveBeenCalled())
     expect(playPreview).toHaveBeenCalledTimes(1)
   })

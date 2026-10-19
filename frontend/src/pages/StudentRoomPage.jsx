@@ -12,6 +12,8 @@ import YouTubeVideo, { extractYouTubeId } from '../components/YouTubeVideo'
 import useIsMobile from '../hooks/useIsMobile'
 import { API_URL } from '../config.js'
 import { installUnlockOnInteraction, playStudentQuestion, unlockAudio } from '../lib/sounds'
+import { Bell, Check, CircleCheck, Clapperboard, ClipboardList, Hourglass, Lightbulb, Mic, TriangleAlert, Trophy, X } from 'lucide-react'
+import { Ico } from '../components/icons'
 
 // Spread the ~N students' navigation to the results page over this window (ms). When a big room
 // ends, all students receive room:ended at once; without a spread they'd all hit the results
@@ -472,7 +474,7 @@ function StudentRoomPage() {
       <Sidebar user={user} />
       
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', marginLeft: 'var(--sidebar-width, 240px)', minWidth: 0, maxWidth: 'calc(100vw - var(--sidebar-width, 240px))', overflowX: 'hidden' }}>
-        <PageHeader isMobile={isMobile} icon={room.settings?.mode === 'video' ? '🎬' : '🎙️'} eyebrow="Live session" title={room.name} subtitle={<>Code <strong style={{ letterSpacing: '0.1em' }}>{room.code}</strong></>} />
+        <PageHeader isMobile={isMobile} icon={room.settings?.mode === 'video' ? Clapperboard : Mic} eyebrow="Live session" title={room.name} subtitle={<>Code <strong style={{ letterSpacing: '0.1em' }}>{room.code}</strong></>} />
 
         {/* Content */}
         <div style={{ flex: 1, padding: isMobile ? '16px' : '32px', width: '100%', boxSizing: 'border-box', overflowX: 'hidden' }}>
@@ -482,12 +484,12 @@ function StudentRoomPage() {
               borderRadius: '12px', padding: '12px 16px', marginBottom: '16px',
               display: 'flex', alignItems: 'center', gap: '12px', color: 'var(--text-primary)', fontSize: '14px'
             }}>
-              <span aria-hidden="true" style={{ fontSize: '18px' }}>💡</span>
+              <span aria-hidden="true" style={{ fontSize: '18px', display: 'inline-flex', color: '#f59e0b' }}><Lightbulb size={18} /></span>
               <span style={{ flex: 1 }}>
                 When your teacher's questions are ready you will hear a chime, and each question takes over this screen until its timer ends.
                 Answer quickly — points reward speed. Tap the ⓘ button in the header for the full guide.
               </span>
-              <button onClick={dismissHint} aria-label="Dismiss hint" style={{ background: 'transparent', border: 'none', color: 'var(--text-secondary)', fontSize: '16px', cursor: 'pointer', padding: '4px' }}>✕</button>
+              <button onClick={dismissHint} aria-label="Dismiss hint" style={{ background: 'transparent', border: 'none', color: 'var(--text-secondary)', fontSize: '16px', cursor: 'pointer', padding: '4px', display: 'inline-flex' }}><X size={16} aria-hidden="true" /></button>
             </div>
           )}
 
@@ -532,7 +534,7 @@ function StudentRoomPage() {
                   cursor: 'pointer'
                 }}
               >
-                🔔 Enable sound
+                <Ico as={Bell} /> Enable sound
               </button>
             )}
             <button
@@ -687,7 +689,7 @@ function StudentRoomPage() {
                           fontSize: '14px',
                           flexShrink: 0
                         }}>
-                          {isSelected ? '✓' : ''}
+                          {isSelected ? <Check size={14} strokeWidth={3} aria-hidden="true" /> : ''}
                         </span>
                       )}
                       <span style={{
@@ -719,7 +721,7 @@ function StudentRoomPage() {
                   background: 'rgba(255,255,255,0.1)',
                   borderRadius: '12px'
                 }}>
-                  <p style={{ fontSize: '18px', fontWeight: '600' }}>✓ Answer Submitted</p>
+                  <p style={{ fontSize: '18px', fontWeight: '600' }}><Ico as={CircleCheck} /> Answer Submitted</p>
                   <p style={{ fontSize: '14px', opacity: 0.9, marginTop: '8px' }}>
                     Waiting for next question...
                   </p>
@@ -769,9 +771,10 @@ function StudentRoomPage() {
                   alignItems: 'center',
                   justifyContent: 'center',
                   margin: '0 auto 24px',
-                  fontSize: '40px'
+                  fontSize: '40px',
+                  color: 'var(--accent)'
                 }}>
-                  ⏳
+                  <Hourglass size={38} aria-hidden="true" />
                 </div>
                 <h2 style={{ fontSize: '24px', fontWeight: '700', color: 'var(--text-primary)', marginBottom: '12px' }}>
                   Waiting for Next Question
@@ -787,7 +790,7 @@ function StudentRoomPage() {
                 {/* Past Questions - flexible width */}
                 <div data-tour="past-questions" style={{ flex: isMobile ? '1 1 100%' : '1 1 calc(70% - 8px)', minWidth: 0, maxWidth: '100%', background: 'var(--bg-card)', borderRadius: 'var(--radius-lg)', padding: isMobile ? '16px' : '24px', boxShadow: 'var(--shadow-md)', border: '1px solid var(--border-color)', boxSizing: 'border-box' }}>
                   <h3 style={{ fontSize: '18px', fontWeight: '600', color: 'var(--text-primary)', marginBottom: '16px' }}>
-                    📋 Past Questions {pastResponses.length > 0 && `(${pastResponses.length})`}
+                    <Ico as={ClipboardList} style={{ color: 'var(--accent)' }} /> Past Questions {pastResponses.length > 0 && `(${pastResponses.length})`}
                   </h3>
                 {pastResponses.length === 0 ? (
                   <p style={{ color: 'var(--text-secondary)', fontSize: '14px', textAlign: 'center', padding: '20px 0' }}>
@@ -848,7 +851,7 @@ function StudentRoomPage() {
                               fontSize: '12px',
                               fontWeight: '600'
                             }}>
-                              ⏳ Answer submitted
+                              <Ico as={Hourglass} /> Answer submitted
                             </span>
                           )}
                           {!q.resultPending && q.answered && q.isCorrect && (
@@ -860,7 +863,7 @@ function StudentRoomPage() {
                               fontSize: '12px',
                               fontWeight: '600'
                             }}>
-                              ✓ Correct (+{q.pointsEarned || 0})
+                              <Ico as={Check} /> Correct (+{q.pointsEarned || 0})
                             </span>
                           )}
                           {!q.resultPending && q.answered && !q.isCorrect && (
@@ -872,7 +875,7 @@ function StudentRoomPage() {
                               fontSize: '12px',
                               fontWeight: '600'
                             }}>
-                              ✗ Incorrect (+{q.pointsEarned || 0})
+                              <Ico as={X} /> Incorrect (+{q.pointsEarned || 0})
                             </span>
                           )}
                         </div>
@@ -970,12 +973,12 @@ function StudentRoomPage() {
                         {/* Live poll: result withheld until it closes. Otherwise, missed-question notice. */}
                         {q.resultPending && (
                           <p style={{ fontSize: '13px', color: 'var(--accent)', margin: 0, fontStyle: 'italic' }}>
-                            ⏳ Result will be shown once this poll closes
+                            <Ico as={Hourglass} /> Result will be shown once this poll closes
                           </p>
                         )}
                         {!q.resultPending && !q.answered && (
                           <p style={{ fontSize: '13px', color: 'var(--tint-danger-fg)', margin: 0, fontStyle: 'italic' }}>
-                            ⚠️ You did not answer this question
+                            <Ico as={TriangleAlert} /> You did not answer this question
                           </p>
                         )}
                       </div>
@@ -990,7 +993,7 @@ function StudentRoomPage() {
                 {/* Leaderboard - flexible width */}
                 <div data-tour="leaderboard" style={{ flex: isMobile ? '1 1 100%' : '1 1 calc(30% - 10px)', minWidth: 0, maxWidth: '100%', background: 'var(--bg-card)', borderRadius: 'var(--radius-lg)', padding: isMobile ? '16px' : '24px', boxShadow: 'var(--shadow-md)', border: '1px solid var(--border-color)', boxSizing: 'border-box', overflow: 'hidden' }}>
                   <h3 style={{ fontSize: '18px', fontWeight: '600', color: 'var(--text-primary)', marginBottom: '16px' }}>
-                    🏆 Leaderboard
+                    <Ico as={Trophy} style={{ color: '#f59e0b' }} /> Leaderboard
                   </h3>
                   <ErrorBoundary message="Leaderboard unavailable">
                     <Leaderboard roomId={room?._id} token={token} socket={socket} userId={user?._id} />

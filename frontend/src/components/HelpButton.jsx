@@ -1,5 +1,6 @@
 import React from 'react'
 import useHelpStore from '../stores/helpStore'
+import { Info } from 'lucide-react'
 
 // The ⓘ button shown in every logged-in page header (left of the theme toggle). Opens the help
 // drawer, which picks the section for the current page. data-tour lets the dashboard tour point at it.
@@ -27,11 +28,7 @@ export default function HelpButton({ style = {} }) {
         ...style
       }}
     >
-      <span aria-hidden="true" style={{
-        display: 'inline-flex', width: '18px', height: '18px', borderRadius: '50%',
-        border: '2px solid currentColor', alignItems: 'center', justifyContent: 'center',
-        fontFamily: 'Georgia, "Times New Roman", serif', fontStyle: 'italic', fontSize: '12px', lineHeight: 1
-      }}>i</span>
+      <Info size={18} aria-hidden="true" />
     </button>
   )
 }

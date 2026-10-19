@@ -4,6 +4,8 @@ import useHelpStore from '../stores/helpStore'
 import useAuthStore from '../stores/authStore'
 import useTourStore from '../stores/tourStore'
 import useIsMobile from '../hooks/useIsMobile'
+import { Compass, X } from 'lucide-react'
+import { renderIcon, Ico } from './icons'
 import { sectionsForRole, sectionForPath, searchSections } from '../content/help'
 import { tourForPath } from '../content/tours'
 
@@ -63,7 +65,7 @@ export default function HelpModal() {
           fontSize: '14px', fontWeight: active ? 700 : 500, cursor: 'pointer', whiteSpace: isMobile ? 'nowrap' : 'normal', flexShrink: 0
         }}
       >
-        <span aria-hidden="true">{s.icon}</span>
+        <span aria-hidden="true" style={{ display: 'inline-flex', flexShrink: 0, color: active ? 'var(--accent)' : 'var(--text-secondary)' }}>{renderIcon(s.icon, 17)}</span>
         <span>{s.title}</span>
       </button>
     )
@@ -88,10 +90,10 @@ export default function HelpModal() {
           />
           {tourId && (
             <button onClick={takeTour} style={{ padding: '9px 14px', borderRadius: '8px', border: '1px solid var(--border-color)', background: 'var(--nav-hover)', color: 'var(--text-primary)', fontSize: '13px', fontWeight: 600, cursor: 'pointer', whiteSpace: 'nowrap' }}>
-              🧭 Take this page's tour
+              <Ico as={Compass} /> Take this page's tour
             </button>
           )}
-          <button onClick={close} aria-label="Close help" style={{ background: 'transparent', border: 'none', color: 'var(--text-primary)', fontSize: '22px', cursor: 'pointer', padding: '2px 8px', lineHeight: 1 }}>✕</button>
+          <button onClick={close} aria-label="Close help" style={{ background: 'transparent', border: 'none', color: 'var(--text-primary)', fontSize: '22px', cursor: 'pointer', padding: '2px 8px', lineHeight: 1, display: 'inline-flex' }}><X size={22} aria-hidden="true" /></button>
         </div>
 
         {/* body: nav + content */}
@@ -110,7 +112,7 @@ export default function HelpModal() {
             {current && (
               <>
                 <h3 style={{ margin: '0 0 14px', fontSize: '20px', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '10px' }}>
-                  <span aria-hidden="true">{current.icon}</span>{current.title}
+                  <span aria-hidden="true" style={{ display: 'inline-flex', color: 'var(--accent)' }}>{renderIcon(current.icon, 22)}</span>{current.title}
                 </h3>
                 {current.ordered
                   ? <ol style={{ margin: 0, paddingLeft: '26px', fontSize: '15px', lineHeight: 1.6 }}>{current.body.map((line, i) => <li key={i} style={{ marginBottom: '10px' }}>{line}</li>)}</ol>

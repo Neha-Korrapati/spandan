@@ -53,8 +53,8 @@ describe('StudentInsights', () => {
     }
     expect(screen.queryByRole('heading', { name: 'Your speed, per question' })).toBeNull()
     expect(screen.queryByRole('heading', { name: 'Worth a second look' })).toBeNull()
-    expect(screen.getByText('✓ correct')).toBeInTheDocument()
-    expect(screen.getByText('✗ wrong')).toBeInTheDocument()
+    expect(screen.getByText('correct', { selector: 'td span' })).toBeInTheDocument()
+    expect(screen.getByText('wrong', { selector: 'td span' })).toBeInTheDocument()
     expect(screen.getByText('· faster')).toBeInTheDocument()            // Q1: 4s vs class 8s
     const card = document.querySelector('[data-tour="question-analysis"]')
     expect(within(card).queryByText('Question 2')).toBeNull()       // the text is not a column any more
@@ -64,7 +64,7 @@ describe('StudentInsights', () => {
     expect(row).toHaveAttribute('aria-expanded', 'true')
     expect(within(card).getByText('Question 2')).toBeInTheDocument()
     expect(screen.getByText(/C\. C \(your pick\)/)).toBeInTheDocument()
-    expect(screen.getByText(/B\. B ✓/)).toBeInTheDocument()
+    expect(screen.getByText(/B\. B/).querySelector('svg[aria-label="correct"]')).not.toBeNull()
     expect(screen.getByText(/B because/)).toBeInTheDocument()
     fireEvent.click(screen.getByRole('tab', { name: /Wrong \(1\)/ }))
     expect(within(card).queryByText('Q1')).toBeNull()

@@ -3,6 +3,8 @@ import { BarList, Columns, StepLine, Scatter, OptionBar, Funnel, Heatmap, Legend
 import { questionsToCsv, questionsToPrintHtml, downloadText, openPrintWindow, safeFilename } from '../lib/questionsExport'
 import { RT_BUCKET_LABELS, scoreTicks, rtTicks, formatDuration } from '../lib/insightsFormat'
 import { StatTile, TileGrid, SectionHeader, SectionLabel, HeroSummary, SectionNav, cardStyle, QPill, QuestionBox } from './InsightUI'
+import { ChartColumn, Check, CircleCheck, Clock as ClockIcon, Download, FileText, Funnel as FunnelIcon, Hand, Hourglass, MessageSquare, Mic, Mountain, PartyPopper, Puzzle, Search, Target, Timer, Users, Zap } from 'lucide-react'
+import { Ico } from './icons'
 
 const card = cardStyle
 const plural = (n, word) => `${n} ${word}${n === 1 ? '' : 's'}`
@@ -30,13 +32,13 @@ export default function RoomInsights({ insights, isTeacher, isMobile, onExportRe
     const minN = Math.max(3, Math.ceil((totals.responders || 0) * 0.2))
     const rated = questions.filter(q => q.correctRate !== null && q.responses >= Math.min(minN, Math.max(1, totals.responders)))
     const hardest = rated.length ? rated.reduce((a, q) => (q.correctRate < a.correctRate ? q : a)) : null
-    if (hardest) out.push({ icon: '🧗', label: 'Hardest question', value: `Q${hardest.n} · ${hardest.correctRate}% correct` })
+    if (hardest) out.push({ icon: Mountain, label: 'Hardest question', value: `Q${hardest.n} · ${hardest.correctRate}% correct` })
     const segs = segments.filter(x => x.segmentIndex >= 1 && x.correctRate !== null && x.responses > 0)
     if (segs.length > 1) {
       const best = segs.reduce((a, x) => (x.correctRate > a.correctRate ? x : a))
-      out.push({ icon: '🎯', label: 'Strongest segment', value: `Segment ${best.segmentIndex} · ${best.correctRate}%` })
+      out.push({ icon: Target, label: 'Strongest segment', value: `Segment ${best.segmentIndex} · ${best.correctRate}%` })
     }
-    if (totals.questions) out.push({ icon: '🙌', label: 'Answered every poll', value: `${totals.answeredAll} of ${plural(totals.joined, 'student')}` })
+    if (totals.questions) out.push({ icon: PartyPopper, label: 'Answered every poll', value: `${totals.answeredAll} of ${plural(totals.joined, 'student')}` })
     return out
   }, [questions, segments, totals])
   const correctTotal = useMemo(() => questions.reduce((a, q) => a + (q.correct || 0), 0), [questions])
@@ -60,20 +62,20 @@ export default function RoomInsights({ insights, isTeacher, isMobile, onExportRe
       {/* ---- overview: the download actions + the page's ONE tile row (students = everyone who joined or answered) ---- */}
       <SectionLabel actions={isTeacher && (
         <div data-tour="results-download" style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', width: isMobile ? '100%' : 'auto' }}>
-          <button onClick={() => setDl(true)} style={{ ...btn(), flex: isMobile ? 1 : undefined }}>⬇ {isMobile ? 'Questions' : 'Download questions'}</button>
-          {onExportResponses && <button onClick={onExportResponses} style={{ ...btn(), flex: isMobile ? 1 : undefined }}>⬇ Responses CSV</button>}
+          <button onClick={() => setDl(true)} style={{ ...btn(), flex: isMobile ? 1 : undefined }}><Ico as={Download} /> {isMobile ? 'Questions' : 'Download questions'}</button>
+          {onExportResponses && <button onClick={onExportResponses} style={{ ...btn(), flex: isMobile ? 1 : undefined }}><Ico as={Download} /> Responses CSV</button>}
         </div>
       )} id="res-overview">Overview</SectionLabel>
       <TileGrid isMobile={isMobile} cols={4}>
         {[
-          { icon: '🧑‍🎓', label: 'Students', value: `${totals.joined}`, sub: `${totals.responders} answered at least one`, tint: 'var(--accent)' },
-          { icon: '📝', label: 'Questions', value: `${totals.questions}`, sub: `${totals.maxPossible} points possible`, tint: '#8b5cf6' },
-          { icon: '💬', label: 'Responses', value: `${totals.responses}`, sub: totals.responders ? `${Math.round(totals.responses / totals.responders * 10) / 10} per answering student` : 'no answers', tint: '#0ea5e9' },
-          { icon: '🙋', label: 'Participation', value: totals.participationRate !== null ? `${totals.participationRate}%` : '—', sub: `${totals.responders} of ${totals.joined} students answered`, tint: '#14b8a6', progress: totals.participationRate },
-          { icon: '✅', label: 'Class correct rate', value: totals.overallCorrectRate !== null ? `${totals.overallCorrectRate}%` : '—', sub: `${correctTotal} of ${totals.responses} answers correct`, tint: COLORS.good, tone: totals.overallCorrectRate !== null ? rateBand(totals.overallCorrectRate).color : undefined, progress: totals.overallCorrectRate, progressColor: totals.overallCorrectRate !== null ? rateBand(totals.overallCorrectRate).color : undefined },
-          { icon: '⏱️', label: 'Median response time', value: totals.medianResponseTime !== null ? `${totals.medianResponseTime}s` : '—', sub: 'across every answer', tint: '#f59e0b' },
-          { icon: '📊', label: 'Score spread', value: totals.medianScore !== null ? `${totals.medianScore} / ${totals.meanScore}` : '—', sub: `median / mean of ${totals.maxPossible} possible`, tint: '#ec4899', progress: totals.maxPossible && totals.medianScore !== null ? (totals.medianScore / totals.maxPossible) * 100 : undefined },
-          { icon: '⏳', label: 'Session length', value: formatDuration(totals.durationMin), sub: `${totals.questions} poll${totals.questions === 1 ? '' : 's'} launched`, tint: '#64748b' },
+          { icon: Users, label: 'Students', value: `${totals.joined}`, sub: `${totals.responders} answered at least one`, tint: 'var(--accent)' },
+          { icon: FileText, label: 'Questions', value: `${totals.questions}`, sub: `${totals.maxPossible} points possible`, tint: '#8b5cf6' },
+          { icon: MessageSquare, label: 'Responses', value: `${totals.responses}`, sub: totals.responders ? `${Math.round(totals.responses / totals.responders * 10) / 10} per answering student` : 'no answers', tint: '#0ea5e9' },
+          { icon: Hand, label: 'Participation', value: totals.participationRate !== null ? `${totals.participationRate}%` : '—', sub: `${totals.responders} of ${totals.joined} students answered`, tint: '#14b8a6', progress: totals.participationRate },
+          { icon: CircleCheck, label: 'Class correct rate', value: totals.overallCorrectRate !== null ? `${totals.overallCorrectRate}%` : '—', sub: `${correctTotal} of ${totals.responses} answers correct`, tint: COLORS.good, tone: totals.overallCorrectRate !== null ? rateBand(totals.overallCorrectRate).color : undefined, progress: totals.overallCorrectRate, progressColor: totals.overallCorrectRate !== null ? rateBand(totals.overallCorrectRate).color : undefined },
+          { icon: Timer, label: 'Median response time', value: totals.medianResponseTime !== null ? `${totals.medianResponseTime}s` : '—', sub: 'across every answer', tint: '#f59e0b' },
+          { icon: ChartColumn, label: 'Score spread', value: totals.medianScore !== null ? `${totals.medianScore} / ${totals.meanScore}` : '—', sub: `median / mean of ${totals.maxPossible} possible`, tint: '#ec4899', progress: totals.maxPossible && totals.medianScore !== null ? (totals.medianScore / totals.maxPossible) * 100 : undefined },
+          { icon: Hourglass, label: 'Session length', value: formatDuration(totals.durationMin), sub: `${totals.questions} poll${totals.questions === 1 ? '' : 's'} launched`, tint: '#64748b' },
         ].map(t => <StatTile key={t.label} {...t} isMobile={isMobile} />)}
       </TileGrid>
 
@@ -102,7 +104,7 @@ export default function RoomInsights({ insights, isTeacher, isMobile, onExportRe
       <SectionLabel id="res-engagement">Engagement</SectionLabel>
       {/* ---- timeline + joins ---- */}
       <div data-tour="results-timeline" className="insight-card" style={card(isMobile)}>
-        <SectionHeader icon="🕒" tint="var(--accent)" title="Session timeline" hint={<>Each column is a poll; polls launched together sit side by side at the minute they went out. Height = how many students answered. Colour = correct-rate band.</>} />
+        <SectionHeader icon={ClockIcon} tint="var(--accent)" title="Session timeline" hint={<>Each column is a poll; polls launched together sit side by side at the minute they went out. Height = how many students answered. Colour = correct-rate band.</>} />
         {timeline.length ? (
           <>
             <Columns points={timeline.map(t => ({ x: t.minute ?? 0, y: t.responders, n: t.n, label: `Q${t.n}`, rate: t.correctRate }))} xMax={sessionEnd} xLabel="min" yLabel="answered"
@@ -122,7 +124,7 @@ export default function RoomInsights({ insights, isTeacher, isMobile, onExportRe
       {/* ---- engagement: funnel + score distribution ---- */}
       <div style={grid}>
         <div className="insight-card" style={card(isMobile)}>
-          <SectionHeader icon="🔻" tint="#14b8a6" title="Participation funnel" hint={<>How far students went: joined → answered at least one poll → answered half → answered every poll.</>} />
+          <SectionHeader icon={FunnelIcon} tint="#14b8a6" title="Participation funnel" hint={<>How far students went: joined → answered at least one poll → answered half → answered every poll.</>} />
           <Funnel stages={[
             { label: 'Joined', value: totals.joined, pct: 100 },
             { label: 'Answered ≥ 1', value: totals.responders, pct: totals.joined ? Math.round(totals.responders / totals.joined * 100) : 0 },
@@ -131,7 +133,7 @@ export default function RoomInsights({ insights, isTeacher, isMobile, onExportRe
           ]} />
         </div>
         <div className="insight-card" style={card(isMobile)}>
-          <SectionHeader icon="📊" tint="#ec4899" title="Score distribution" hint={<>Students by total points. Two humps mean two groups in the room. Mean {scores.mean ?? '—'}, median {scores.median ?? '—'}, top {scores.max ?? '—'} of {scores.maxPossible}.</>} />
+          <SectionHeader icon={ChartColumn} tint="#ec4899" title="Score distribution" hint={<>Students by total points. Two humps mean two groups in the room. Mean {scores.mean ?? '—'}, median {scores.median ?? '—'}, top {scores.max ?? '—'} of {scores.maxPossible}.</>} />
           <Columns points={scores.buckets.map((b, i) => ({ x: i + 0.5, y: b.count, label: `${b.from}–${b.to} pts` }))} xMax={scores.buckets.length} xTicks={scoreTicks(scores.buckets)} barWidth={40} height={170} yLabel="students"
             tipFor={(p) => [p.label, `${p.y} student${p.y === 1 ? '' : 's'}`]} />
         </div>
@@ -141,11 +143,11 @@ export default function RoomInsights({ insights, isTeacher, isMobile, onExportRe
       {/* ---- difficulty: correct rate bars + speed vs accuracy ---- */}
       <div style={grid}>
         <div className="insight-card" style={card(isMobile)}>
-          <SectionHeader icon="🎯" tint={COLORS.good} title="Correct rate per question" hint={<>Sorted, easiest first. A wide spread means the session had cliffs; a flat line means uniform difficulty.</>} />
+          <SectionHeader icon={Target} tint={COLORS.good} title="Correct rate per question" hint={<>Sorted, easiest first. A wide spread means the session had cliffs; a flat line means uniform difficulty.</>} />
           {rateItems.length ? <BarList items={rateItems} colorFor={(it) => rateBand(it.value).color} /> : <p style={hint}>No answers yet.</p>}
         </div>
         <div className="insight-card" style={card(isMobile)}>
-          <SectionHeader icon="⚡" tint="#f59e0b" title="Speed vs accuracy" hint={<>One dot per question: median response time against correct rate. Slow and wrong = the class struggled. Fast and wrong = a misconception.</>} />
+          <SectionHeader icon={Zap} tint="#f59e0b" title="Speed vs accuracy" hint={<>One dot per question: median response time against correct rate. Slow and wrong = the class struggled. Fast and wrong = a misconception.</>} />
           {scatterPts.length ? <Scatter points={scatterPts} xLabel="s" yLabel="correct" xMax={Math.max(10, ...scatterPts.map(p => p.x)) * 1.1} /> : <p style={hint}>No response times recorded.</p>}
         </div>
       </div>
@@ -153,7 +155,7 @@ export default function RoomInsights({ insights, isTeacher, isMobile, onExportRe
       {/* ---- per segment ---- */}
       {segments.length > 0 && (
         <div className="insight-card" style={card(isMobile)}>
-          <SectionHeader icon="🎙️" tint="#8b5cf6" title="By lecture segment" hint={<>Where in the lecture the class got lost: questions and correct rate per segment, with the transcript length of that segment.</>} />
+          <SectionHeader icon={Mic} tint="#8b5cf6" title="By lecture segment" hint={<>Where in the lecture the class got lost: questions and correct rate per segment, with the transcript length of that segment.</>} />
           <div className="thin-scroll" style={{ overflowX: 'auto' }}>
             <table style={tbl}>
               <thead><tr>{['Segment', 'Questions', 'Answers', 'Correct rate', 'Transcript words', 'Segment length'].map(h => <th key={h} style={th}>{h}</th>)}</tr></thead>
@@ -171,7 +173,7 @@ export default function RoomInsights({ insights, isTeacher, isMobile, onExportRe
 
       {/* ---- item analysis (collapsible per question) ---- */}
       <div data-tour="item-analysis" className="insight-card" style={card(isMobile)}>
-        <SectionHeader icon="🔍" tint="#0ea5e9" title="Question-wise analysis" hint={<>Difficulty = share correct. Discrimination = did students who got it right score higher overall (point-biserial; above 0.3 is good, below 0.2 is weak). Click a question number to see the question, the answer distribution{isTeacher ? ', the explanation and who got it wrong' : ' and the explanation'}.</>} />
+        <SectionHeader icon={Search} tint="#0ea5e9" title="Question-wise analysis" hint={<>Difficulty = share correct. Discrimination = did students who got it right score higher overall (point-biserial; above 0.3 is good, below 0.2 is weak). Click a question number to see the question, the answer distribution{isTeacher ? ', the explanation and who got it wrong' : ' and the explanation'}.</>} />
         {questions.length === 0 ? <p style={hint}>No questions were asked in this room.</p> : (
           <div className="thin-scroll" style={{ overflowX: 'auto' }}>
             <table style={tbl}>
@@ -206,7 +208,7 @@ export default function RoomInsights({ insights, isTeacher, isMobile, onExportRe
                               <div style={{ fontSize: '13px', fontWeight: 600, marginBottom: '6px' }}>Answer distribution</div>
                               <OptionBar options={q.options} total={q.responses} />
                               <ol style={{ margin: '10px 0 0', paddingLeft: '22px', fontSize: '13px', lineHeight: 1.6 }}>
-                                {q.options.map((o, i) => <li key={i} style={{ fontWeight: o.isCorrect ? 700 : 400 }}>{LETTERS[i]}. {o.text}{o.isCorrect ? ' ✓' : ''} <span style={sm}>— {o.count} ({o.share}%){!o.isCorrect && o.distractorShare !== null ? `, ${o.distractorShare}% of wrong picks` : ''}</span></li>)}
+                                {q.options.map((o, i) => <li key={i} style={{ fontWeight: o.isCorrect ? 700 : 400 }}>{LETTERS[i]}. {o.text}{o.isCorrect ? <> <Ico as={Check} aria-label="correct" /></> : ''} <span style={sm}>— {o.count} ({o.share}%){!o.isCorrect && o.distractorShare !== null ? `, ${o.distractorShare}% of wrong picks` : ''}</span></li>)}
                               </ol>
                               {q.explanation && <div style={{ marginTop: '10px', fontSize: '13px', background: 'var(--bg-card)', border: '1px solid var(--border-color)', borderRadius: '8px', padding: '8px 10px' }}><strong>Explanation:</strong> {q.explanation}</div>}
                             </div>
@@ -235,7 +237,7 @@ export default function RoomInsights({ insights, isTeacher, isMobile, onExportRe
       {isTeacher && heatmap && heatmap.rows.length > 0 && <SectionLabel id="res-students">Students</SectionLabel>}
       {isTeacher && heatmap && heatmap.rows.length > 0 && (
         <div data-tour="results-heatmap" className="insight-card" style={card(isMobile)}>
-          <SectionHeader icon="🧩" tint="var(--accent)" title="Students × questions" hint={<>Each cell is one student's result on one question. Sorted by total points. The CSV export has the full table.</>} />
+          <SectionHeader icon={Puzzle} tint="var(--accent)" title="Students × questions" hint={<>Each cell is one student's result on one question. Sorted by total points. The CSV export has the full table.</>} />
           {insights.anonymity && (
             <p style={{ ...hint, marginTop: '-8px' }}>This session's leaderboard is anonymous, so names are hidden here too{insights.anonymity.percent > 0 ? `, except the lowest-scoring ${insights.anonymity.percent}% (as on your leaderboard)` : ''}.</p>
           )}

@@ -61,7 +61,7 @@ describe('help content', () => {
     const all = HELP_SECTIONS.flatMap(s => s.body).join(' ')
     expect(all).toMatch(/1 to 15/)
     expect(all).toMatch(/five-second chime/)
-    expect(all).toMatch(/🔔/)
+    expect(all).toMatch(/bell button/)
     expect(all).toMatch(/ⓘ/)
     expect(all).not.toMatch(/"Manual"|Manual item|Manual page/)
   })

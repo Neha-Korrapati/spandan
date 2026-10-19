@@ -5,6 +5,7 @@ import Sidebar from '../components/Sidebar'
 import { PageHeader, pageWash } from '../components/AppUI'
 import useIsMobile from '../hooks/useIsMobile'
 import { adminApi } from '../lib/api'
+import { ShieldCheck } from 'lucide-react'
 
 // Admin-only page to approve/reject teacher account requests. Uses the same page shell
 // (sidebar + header + content) as the other teacher pages so it looks native.
@@ -76,7 +77,7 @@ export default function AdminPage() {
         marginLeft: 'var(--sidebar-width, 240px)', maxWidth: '100%', boxSizing: 'border-box'
       }}>
         {/* Header */}
-        <PageHeader isMobile={isMobile} icon="🛡️" title="Teacher Approvals" subtitle="Review and approve teacher account requests" />
+        <PageHeader isMobile={isMobile} icon={ShieldCheck} title="Teacher Approvals" subtitle="Review and approve teacher account requests" />
 
         {/* Content */}
         <div style={{ flex: 1, padding: isMobile ? '16px' : '28px 32px 32px', maxWidth: '100%', boxSizing: 'border-box', background: pageWash }}>

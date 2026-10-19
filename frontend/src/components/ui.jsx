@@ -1,6 +1,7 @@
 import React from 'react'
 import useAuthStore from '../stores/authStore'
 import SpandanIcon from '../components/SpandanIcon'
+import { X } from 'lucide-react'
 import useSocketStore from '../stores/socketStore'
 import { useNavigate } from 'react-router-dom'
 
@@ -346,10 +347,12 @@ export function Modal({ isOpen, onClose, title, children }) {
               border: 'none',
               fontSize: '24px',
               color: '#9ca3af',
-              cursor: 'pointer'
+              cursor: 'pointer',
+              display: 'inline-flex'
             }}
+            aria-label="Close"
           >
-            ✕
+            <X size={22} aria-hidden="true" />
           </button>
         </div>
         {children}

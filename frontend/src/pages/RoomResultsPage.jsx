@@ -10,6 +10,8 @@ import useIsMobile from '../hooks/useIsMobile'
 import RoomInsights from '../components/RoomInsights'
 import StudentInsights from '../components/StudentInsights'
 import { downloadText, safeFilename } from '../lib/questionsExport'
+import { ArrowLeft, Award, ChartColumn, Check, CircleCheck, FileText, Inbox, Target, Users, X } from 'lucide-react'
+import { Ico, renderIcon } from '../components/icons'
 
 function RoomResultsPage() {
   const { roomId } = useParams()
@@ -200,13 +202,13 @@ function RoomResultsPage() {
   // Fallback summary cards — only shown if the insights call failed. Normally each role's single tile
   // row lives in RoomInsights / StudentInsights (one source of numbers, no duplicates).
   const statCards = [
-    { icon: '📝', value: questions.length, label: 'Total Questions', tint: 'var(--accent)' },
-    { icon: '👥', value: stats.totalResponses, label: 'Total Responses', tint: 'var(--accent)' },
+    { icon: FileText, value: questions.length, label: 'Total Questions', tint: 'var(--accent)' },
+    { icon: Users, value: stats.totalResponses, label: 'Total Responses', tint: 'var(--accent)' },
     ...(user?.role === 'teacher'
-      ? [{ icon: '🧑‍🎓', value: stats.totalStudents || 0, label: 'Total Students', tint: 'var(--accent)' }]
-      : [{ icon: '🏅', value: stats.userRank ? `#${stats.userRank}` : '—', label: 'Your Rank', tint: '#f59e0b', valueColor: '#f59e0b' }]),
-    { icon: '✅', value: `${stats.averageScore}%`, label: 'Average Score', tint: '#059669', valueColor: '#059669' },
-    { icon: '🎯', value: stats.totalCorrect, label: 'Correct Answers', tint: 'var(--accent)', valueColor: 'var(--accent)' },
+      ? [{ icon: Users, value: stats.totalStudents || 0, label: 'Total Students', tint: 'var(--accent)' }]
+      : [{ icon: Award, value: stats.userRank ? `#${stats.userRank}` : '—', label: 'Your Rank', tint: '#f59e0b', valueColor: '#f59e0b' }]),
+    { icon: CircleCheck, value: `${stats.averageScore}%`, label: 'Average Score', tint: '#059669', valueColor: '#059669' },
+    { icon: Target, value: stats.totalCorrect, label: 'Correct Answers', tint: 'var(--accent)', valueColor: 'var(--accent)' },
   ]
 
   return (
@@ -229,7 +231,7 @@ function RoomResultsPage() {
         maxWidth: '100%',
         boxSizing: 'border-box'
       }}>
-        <PageHeader isMobile={isMobile} icon="📊" eyebrow="Session results" title={room?.name || 'Room'}
+        <PageHeader isMobile={isMobile} icon={ChartColumn} eyebrow="Session results" title={room?.name || 'Room'}
           subtitle={<>Code <strong style={{ letterSpacing: '0.1em' }}>{room?.code}</strong> · Completed{room?.endedAt ? ` · ${new Date(room.endedAt).toLocaleDateString(undefined, { day: 'numeric', month: 'short', year: 'numeric' })}` : ''}</>} />
 
         {/* Content (faint accent wash behind the results) */}
@@ -259,7 +261,7 @@ function RoomResultsPage() {
               marginBottom: '24px'
             }}
           >
-            ← Back
+            <Ico as={ArrowLeft} /> Back
           </button>
 
           {/* Fallback overview stats (insights unavailable) */}
@@ -291,9 +293,10 @@ function RoomResultsPage() {
                   justifyContent: 'center',
                   fontSize: '20px',
                   background: 'color-mix(in srgb, ' + card.tint + ' 14%, transparent)',
-                  border: '1px solid color-mix(in srgb, ' + card.tint + ' 22%, transparent)'
+                  border: '1px solid color-mix(in srgb, ' + card.tint + ' 22%, transparent)',
+                  color: 'color-mix(in srgb, ' + card.tint + ', white var(--tone-lift))'
                 }} aria-hidden="true">
-                  {card.icon}
+                  {renderIcon(card.icon, 20)}
                 </div>
                 <div style={{
                   fontSize: isMobile ? '26px' : '30px',
@@ -345,7 +348,7 @@ function RoomResultsPage() {
 
             {questions.length === 0 ? (
               <div style={{ textAlign: 'center', padding: '48px 16px', color: 'var(--text-secondary)' }}>
-                <div style={{ fontSize: '48px', marginBottom: '16px' }}>📭</div>
+                <div style={{ fontSize: '48px', marginBottom: '16px', color: 'var(--text-secondary)' }}><Inbox size={48} strokeWidth={1.5} aria-hidden="true" /></div>
                 <p style={{ margin: 0 }}>No questions were asked in this room.</p>
               </div>
             ) : (
@@ -425,7 +428,7 @@ function RoomResultsPage() {
                                 background: q.isCorrect ? 'color-mix(in srgb, #059669 16%, transparent)' : 'color-mix(in srgb, #dc2626 16%, transparent)',
                                 color: q.isCorrect ? '#059669' : '#dc2626'
                               }}>
-                                {q.isCorrect ? '✓ Correct' : '✗ Incorrect'}
+                                {q.isCorrect ? <><Ico as={Check} /> Correct</> : <><Ico as={X} /> Incorrect</>}
                               </span>
                             )}
                           </div>
@@ -483,7 +486,7 @@ function RoomResultsPage() {
                                     {opt.text}
                                   </span>
                                   {isTeacher && isCorrect && (
-                                    <span style={{ marginLeft: 'auto', color: '#059669', fontSize: '14px', flexShrink: 0 }}>✓</span>
+                                    <span style={{ marginLeft: 'auto', color: '#059669', fontSize: '14px', flexShrink: 0, display: 'inline-flex' }}><Check size={16} strokeWidth={2.75} aria-label="Correct" /></span>
                                   )}
                                   {!isTeacher && isSelected && (
                                     <span style={{ marginLeft: 'auto', color: 'var(--accent)', fontSize: '13px', fontWeight: 600, flexShrink: 0, whiteSpace: 'nowrap' }}>Your answer</span>

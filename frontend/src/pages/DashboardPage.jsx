@@ -9,6 +9,8 @@ import useIsMobile from '../hooks/useIsMobile'
 import useNow from '../hooks/useNow'
 import { PageHeader, pageWash, greeting, dateLabel, LiveClock, inputStyle, primaryButton, ChoiceCard, RoomCard, Pill, EmptyState } from '../components/AppUI'
 import { StatTile, TileGrid, SectionLabel, SectionHeader, cardStyle } from '../components/InsightUI'
+import { ChartColumn, CircleDot, Clapperboard, Hand, Inbox, Library, MessageSquare, Mic, Plus } from 'lucide-react'
+import { Ico } from '../components/icons'
 
 function DashboardPage() {
   const navigate = useNavigate()
@@ -169,7 +171,7 @@ function DashboardPage() {
         maxWidth: '100%',
         boxSizing: 'border-box'
       }}>
-        <PageHeader isMobile={isMobile} icon="👋" eyebrow={<>{dateLabel(now)} · <LiveClock /></>}
+        <PageHeader isMobile={isMobile} icon={Hand} eyebrow={<>{dateLabel(now)} · <LiveClock /></>}
           title={`${greeting(now)}, ${firstName}!`} subtitle="Manage your rooms and questions" />
 
         {/* Dashboard content */}
@@ -177,17 +179,17 @@ function DashboardPage() {
           <SectionLabel>Overview</SectionLabel>
           <TileGrid isMobile={isMobile} cols={4} tour="stats">
             {[
-              { icon: '📚', label: 'Total rooms', value: stats.totalRooms, sub: `${stats.totalRooms - stats.activeRooms} ended`, tint: 'var(--accent)' },
-              { icon: '🟢', label: 'Active rooms', value: stats.activeRooms, sub: stats.activeRooms ? 'open right now' : 'none open', tint: '#10b981' },
-              { icon: '📊', label: 'Total polls', value: stats.totalPolls, sub: stats.totalRooms ? `${Math.round(stats.totalPolls / stats.totalRooms * 10) / 10} per room` : 'across all rooms', tint: '#8b5cf6' },
-              { icon: '💬', label: 'Total responses', value: stats.totalResponses.toLocaleString(), sub: stats.totalPolls ? `${Math.round(stats.totalResponses / stats.totalPolls)} per poll` : 'student answers', tint: '#0ea5e9' },
+              { icon: Library, label: 'Total rooms', value: stats.totalRooms, sub: `${stats.totalRooms - stats.activeRooms} ended`, tint: 'var(--accent)' },
+              { icon: CircleDot, label: 'Active rooms', value: stats.activeRooms, sub: stats.activeRooms ? 'open right now' : 'none open', tint: '#10b981' },
+              { icon: ChartColumn, label: 'Total polls', value: stats.totalPolls, sub: stats.totalRooms ? `${Math.round(stats.totalPolls / stats.totalRooms * 10) / 10} per room` : 'across all rooms', tint: '#8b5cf6' },
+              { icon: MessageSquare, label: 'Total responses', value: stats.totalResponses.toLocaleString(), sub: stats.totalPolls ? `${Math.round(stats.totalResponses / stats.totalPolls)} per poll` : 'student answers', tint: '#0ea5e9' },
             ].map(t => <StatTile key={t.label} {...t} isMobile={isMobile} />)}
           </TileGrid>
 
           {/* Create Room Section */}
           <SectionLabel>Start a session</SectionLabel>
           <div data-tour="create-room" className="insight-card" style={cardStyle(isMobile)}>
-            <SectionHeader icon="＋" title="Create New Room" hint="Give it a name and pick how you will teach. Students join with the room code." />
+            <SectionHeader icon={Plus} title="Create New Room" hint="Give it a name and pick how you will teach. Students join with the room code." />
             <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
               <div style={{ display: 'flex', gap: '12px', flexDirection: isMobile ? 'column' : 'row' }}>
                 <input
@@ -202,7 +204,7 @@ function DashboardPage() {
                 />
                 {!isMobile && (
                   <button onClick={handleCreateRoom} disabled={disabled} style={primaryButton(disabled)}>
-                    {isCreating ? 'Creating…' : '＋ Create Room'}
+                    {isCreating ? 'Creating…' : <><Ico as={Plus} /> Create Room</>}
                   </button>
                 )}
               </div>
@@ -210,8 +212,8 @@ function DashboardPage() {
               {/* Room mode */}
               <div role="radiogroup" aria-label="Room mode" style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
                 {[
-                  { key: 'normal', icon: '🎙️', title: 'Normal', desc: 'Live mic + transcript', tint: 'var(--accent)' },
-                  { key: 'video', icon: '🎬', title: 'Video', desc: 'YouTube video or live link', tint: '#ec4899' }
+                  { key: 'normal', icon: Mic, title: 'Normal', desc: 'Live mic + transcript', tint: 'var(--accent)' },
+                  { key: 'video', icon: Clapperboard, title: 'Video', desc: 'YouTube video or live link', tint: '#ec4899' }
                 ].map((opt) => (
                   <ChoiceCard key={opt.key} icon={opt.icon} title={opt.title} description={opt.desc} tint={opt.tint} active={mode === opt.key} onClick={() => setMode(opt.key)} />
                 ))}
@@ -254,7 +256,7 @@ function DashboardPage() {
               {/* phones: the button comes below the Normal / Video selector, at full width */}
               {isMobile && (
                 <button onClick={handleCreateRoom} disabled={disabled} style={primaryButton(disabled, { width: '100%' })}>
-                  {isCreating ? 'Creating…' : '＋ Create Room'}
+                  {isCreating ? 'Creating…' : <><Ico as={Plus} /> Create Room</>}
                 </button>
               )}
             </div>
@@ -271,7 +273,7 @@ function DashboardPage() {
               {activeRooms.map((room) => (
                 <RoomCard
                   key={room._id}
-                  icon={room.settings?.mode === 'video' ? '🎬' : '🎙️'}
+                  icon={room.settings?.mode === 'video' ? Clapperboard : Mic}
                   tint={room.settings?.mode === 'video' ? '#ec4899' : 'var(--accent)'}
                   title={room.name}
                   code={room.code}
@@ -284,7 +286,7 @@ function DashboardPage() {
               ))}
             </div>
           ) : (
-            <EmptyState icon="📭" title="No active rooms" description="Create your first room above. It will appear here while it is open." />
+            <EmptyState icon={Inbox} title="No active rooms" description="Create your first room above. It will appear here while it is open." />
           )}
         </div>
       </div>

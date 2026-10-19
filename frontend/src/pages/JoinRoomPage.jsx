@@ -6,6 +6,7 @@ import useRoomStore from '../stores/roomStore'
 import Sidebar from '../components/Sidebar'
 import useIsMobile from '../hooks/useIsMobile'
 import { PageHeader, pageWash, inputStyle, primaryButton } from '../components/AppUI'
+import { KeyRound, Link as LinkIcon } from 'lucide-react'
 
 function JoinRoomPage() {
   const navigate = useNavigate()
@@ -61,7 +62,7 @@ function JoinRoomPage() {
       <Sidebar user={user} />
 
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', marginLeft: 'var(--sidebar-width, 240px)', minWidth: 0, maxWidth: '100%' }}>
-        <PageHeader isMobile={isMobile} icon="🔗" title="Join a Room" subtitle="Enter the code shared by your teacher" />
+        <PageHeader isMobile={isMobile} icon={LinkIcon} title="Join a Room" subtitle="Enter the code shared by your teacher" />
 
         {/* Content */}
         <div style={{ flex: 1, padding: isMobile ? '16px' : '40px 32px', display: 'flex', justifyContent: 'center', alignItems: 'flex-start', boxSizing: 'border-box', background: pageWash }}>
@@ -74,8 +75,8 @@ function JoinRoomPage() {
               <span aria-hidden="true" style={{ position: 'absolute', width: 220, height: 220, right: -60, top: -120, borderRadius: '50%', background: 'radial-gradient(circle, rgba(255,255,255,0.18), rgba(255,255,255,0) 70%)' }} />
               <div aria-hidden="true" style={{
                 position: 'absolute', left: isMobile ? 20 : 32, bottom: -28, width: 60, height: 60, borderRadius: 18, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 28,
-                background: 'var(--bg-card)', border: '1px solid var(--border-color)', boxShadow: '0 8px 20px rgba(16,24,40,0.12)'
-              }}>🔑</div>
+                background: 'var(--bg-card)', border: '1px solid var(--border-color)', boxShadow: '0 8px 20px rgba(16,24,40,0.12)', color: 'var(--accent)'
+              }}><KeyRound size={28} /></div>
             </div>
             <div style={{ padding: isMobile ? '40px 20px 24px' : '44px 32px 32px' }}>
               <h2 style={{ margin: '0 0 6px', fontSize: isMobile ? '20px' : '22px', fontWeight: 750, letterSpacing: '-0.01em', color: 'var(--text-primary)' }}>Enter Room Code</h2>

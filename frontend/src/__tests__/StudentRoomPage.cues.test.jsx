@@ -89,7 +89,7 @@ describe('StudentRoomPage — question-time cue', () => {
     await screen.findByRole('heading', { name: 'Smoke room' })
     const leave = screen.getByText('Leave')
     const bell = screen.getByRole('button', { name: /Sound on/ })
-    expect(bell).toHaveTextContent('🔔')
+    expect(bell.querySelector('svg')).not.toBeNull()                    // the bell icon
     expect(leave.parentElement).toBe(bell.parentElement)                 // same flex row
     const siblings = Array.from(leave.parentElement.children)
     expect(siblings.indexOf(bell)).toBeLessThan(siblings.indexOf(leave)) // bell before Leave

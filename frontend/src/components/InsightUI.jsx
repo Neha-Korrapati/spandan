@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react'
+import { ChevronDown, ChevronRight } from 'lucide-react'
+import { renderIcon } from './icons'
 
 // Shared building blocks for the results page (RoomInsights / StudentInsights): stat tiles with a
 // tinted icon (same visual language as the dashboard cards), section headers with an icon chip, and
@@ -7,6 +9,8 @@ import React, { useEffect, useState } from 'react'
 const tintBg = (tint, pct) => `color-mix(in srgb, ${tint} ${pct}%, transparent)`
 // Gradient icon chip (lighter top-left → stronger bottom-right) in the tile's colour.
 const chipBg = (tint) => `linear-gradient(135deg, ${tintBg(tint, 10)}, ${tintBg(tint, 26)})`
+// The icon in a chip: the tint, lifted toward white in dark mode (--tone-lift).
+const chipInk = (tint) => `color-mix(in srgb, ${tint}, white var(--tone-lift))`
 
 // Card surface shared by every results-page card: large radius, soft layered shadow.
 export const cardStyle = (isMobile) => ({
@@ -30,8 +34,8 @@ export function StatTile({ icon, label, value, sub, tint = 'var(--accent)', tone
         <span aria-hidden="true" style={{
           width: isMobile ? 32 : 36, height: isMobile ? 32 : 36, flexShrink: 0, borderRadius: '11px',
           display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: isMobile ? 16 : 18,
-          background: chipBg(tint), border: `1px solid ${tintBg(tint, 22)}`
-        }}>{icon}</span>
+          color: chipInk(tint), background: chipBg(tint), border: `1px solid ${tintBg(tint, 22)}`
+        }}>{renderIcon(icon, isMobile ? 16 : 18)}</span>
         <span style={{ fontSize: '12.5px', fontWeight: 600, color: 'var(--text-secondary)', lineHeight: 1.25 }}>{label}</span>
       </div>
       <div style={{ fontSize: isMobile ? '24px' : '28px', fontWeight: 700, letterSpacing: '-0.02em', lineHeight: 1.1, color: tone ? `color-mix(in srgb, ${tone}, white var(--tone-lift))` : 'var(--text-primary)', overflowWrap: 'anywhere' }}>{value}</div>
@@ -61,7 +65,7 @@ export function SectionHeader({ icon, title, hint, tint = 'var(--accent)', actio
   return (
     <div style={{ marginBottom: hint ? 14 : 10 }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
-        {icon && <span aria-hidden="true" style={{ width: 32, height: 32, flexShrink: 0, borderRadius: '10px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: 15, background: chipBg(tint), border: `1px solid ${tintBg(tint, 22)}` }}>{icon}</span>}
+        {icon && <span aria-hidden="true" style={{ width: 32, height: 32, flexShrink: 0, borderRadius: '10px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: 15, color: chipInk(tint), background: chipBg(tint), border: `1px solid ${tintBg(tint, 22)}` }}>{renderIcon(icon, 16)}</span>}
         <h2 style={{ margin: 0, fontSize: '17px', fontWeight: 700, letterSpacing: '-0.01em', color: 'var(--text-primary)', flex: 1, minWidth: 0 }}>{title}</h2>
         {actions}
       </div>
@@ -106,7 +110,7 @@ function Highlights({ items, isMobile }) {
     <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : `repeat(${Math.min(3, items.length)}, minmax(0, 1fr))`, gap: 10, marginTop: 14 }}>
       {items.map((h, i) => (
         <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 12px', borderRadius: 14, background: 'color-mix(in srgb, var(--bg-card) 72%, transparent)', border: '1px solid var(--border-color)', minWidth: 0 }}>
-          <span aria-hidden="true" style={{ fontSize: 18 }}>{h.icon}</span>
+          <span aria-hidden="true" style={{ fontSize: 18, display: 'inline-flex', flexShrink: 0, color: 'var(--accent)' }}>{renderIcon(h.icon, 18)}</span>
           <span style={{ minWidth: 0 }}>
             <span style={{ display: 'block', fontSize: 11.5, fontWeight: 600, color: 'var(--text-secondary)' }}>{h.label}</span>
             <span style={{ display: 'block', fontSize: 14, fontWeight: 700, color: 'var(--text-primary)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{h.value}</span>
@@ -193,7 +197,7 @@ export function QPill({ n, open, compact }) {
       color: open ? '#fff' : 'var(--accent)', background: open ? 'var(--accent)' : tintBg('var(--accent)', 10),
       border: `1px solid ${open ? 'transparent' : tintBg('var(--accent)', 30)}`
     }}>
-      <span aria-hidden="true" style={{ fontSize: 10 }}>{open ? '▾' : '▸'}</span>Q{n}
+      {open ? <ChevronDown size={12} strokeWidth={2.5} aria-hidden="true" /> : <ChevronRight size={12} strokeWidth={2.5} aria-hidden="true" />}Q{n}
     </span>
   )
 }

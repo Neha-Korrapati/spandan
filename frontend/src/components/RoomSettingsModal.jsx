@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { getAIProviders } from '../services/questionService'
+import { Settings, X } from 'lucide-react'
+import { Ico } from './icons'
 
 const DIFFICULTY_LEVELS = ['easy', 'medium', 'hard']
 // Segment Time is a free whole-minute input, 1–15 min (was a fixed 1/2/3/5/10/15/20/30 button list).
@@ -84,7 +86,7 @@ function RoomSettingsModal({ isOpen, onClose, settings, onSave }) {
           borderBottom: '1px solid var(--border-color)'
         }}>
           <h2 style={{ margin: 0, fontSize: '18px', fontWeight: '600', color: 'var(--text-primary)' }}>
-            ⚙️ Room Settings
+            <Ico as={Settings} style={{ color: 'var(--accent)' }} /> Room Settings
           </h2>
           <button
             onClick={onClose}
@@ -93,10 +95,12 @@ function RoomSettingsModal({ isOpen, onClose, settings, onSave }) {
               border: 'none',
               fontSize: '20px',
               cursor: 'pointer',
-              color: 'var(--text-secondary)'
+              color: 'var(--text-secondary)',
+              display: 'inline-flex'
             }}
+            aria-label="Close settings"
           >
-            ✕
+            <X size={20} aria-hidden="true" />
           </button>
         </div>
 

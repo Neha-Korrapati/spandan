@@ -7,6 +7,8 @@ import useIsMobile from '../hooks/useIsMobile'
 import { PageHeader, pageWash, inputStyle, RoomCard, Pill, EmptyState, iconButton } from '../components/AppUI'
 import { SectionLabel } from '../components/InsightUI'
 import { API_URL } from '../config.js'
+import { Clapperboard, Download, History as HistoryIcon, Mic, Search as SearchIcon } from 'lucide-react'
+import { Ico } from '../components/icons'
 
 function RoomHistoryPage() {
   const navigate = useNavigate()
@@ -64,7 +66,7 @@ function RoomHistoryPage() {
       <Sidebar user={user} />
 
       <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', marginLeft: 'var(--sidebar-width, 240px)', maxWidth: '100%', boxSizing: 'border-box' }}>
-        <PageHeader isMobile={isMobile} icon="📜" title="Room History" subtitle="View past classroom sessions" />
+        <PageHeader isMobile={isMobile} icon={HistoryIcon} title="Room History" subtitle="View past classroom sessions" />
 
         {/* Content */}
         <div style={{ flex: 1, padding: isMobile ? '16px' : '28px 32px 32px', maxWidth: '100%', boxSizing: 'border-box', background: pageWash }}>
@@ -82,7 +84,7 @@ function RoomHistoryPage() {
               {shown.map((room, i) => (
                 <RoomCard
                   key={room._id}
-                  icon={room.settings?.mode === 'video' ? '🎬' : '🏁'}
+                  icon={room.settings?.mode === 'video' ? Clapperboard : Mic}
                   tint={room.settings?.mode === 'video' ? '#ec4899' : '#64748b'}
                   title={room.name}
                   code={room.code}
@@ -100,16 +102,16 @@ function RoomHistoryPage() {
                       aria-label={`Download results CSV for ${room.name}`}
                       style={{ ...iconButton('var(--accent)'), width: 'auto', padding: '0 12px', fontSize: 12.5, cursor: downloadingId === room._id ? 'wait' : 'pointer' }}
                     >
-                      {downloadingId === room._id ? '…' : '⬇ CSV'}
+                      {downloadingId === room._id ? '…' : <><Ico as={Download} /> CSV</>}
                     </button>
                   )}
                 />
               ))}
             </div>
           ) : q ? (
-            <EmptyState icon="🔍" title="No rooms match your search" description={`Nothing named or coded "${query}". Try a shorter search.`} />
+            <EmptyState icon={SearchIcon} title="No rooms match your search" description={`Nothing named or coded "${query}". Try a shorter search.`} />
           ) : (
-            <EmptyState icon="📜" title="No ended rooms yet" description="Rooms you end will appear here for review." />
+            <EmptyState icon={HistoryIcon} title="No ended rooms yet" description="Rooms you end will appear here for review." />
           )}
         </div>
       </div>

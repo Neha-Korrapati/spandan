@@ -46,8 +46,8 @@ describe('RoomInsights (teacher)', () => {
     expect(within(row).getByText('Session length')).toBeInTheDocument()
     expect(within(row).getByText('40 min')).toBeInTheDocument()
     expect(screen.getByText('6.5s')).toBeInTheDocument()           // median response time tile
-    expect(screen.getByText('⬇ Download questions')).toBeInTheDocument()
-    expect(screen.getByText('⬇ Responses CSV')).toBeInTheDocument()
+    expect(screen.getByText('Download questions')).toBeInTheDocument()
+    expect(screen.getByText('Responses CSV')).toBeInTheDocument()
     expect(screen.getByText('Low discrimination')).toBeInTheDocument()
     expect(screen.getByText('Dead distractor')).toBeInTheDocument()
   })
@@ -71,7 +71,7 @@ describe('RoomInsights (teacher)', () => {
 
   it('download dialog: CSV answer key, then PDF student copy', () => {
     render(<RoomInsights insights={teacher} isTeacher isMobile={false} />)
-    fireEvent.click(screen.getByText('⬇ Download questions'))
+    fireEvent.click(screen.getByText('Download questions'))
     const dlg = screen.getByRole('dialog', { name: 'Download questions' })
     fireEvent.click(within(dlg).getByLabelText(/^CSV/))
     fireEvent.click(within(dlg).getByText('Download'))
@@ -81,7 +81,7 @@ describe('RoomInsights (teacher)', () => {
     expect(csv).toMatch(/^no,segment,type,question/); expect(csv).toMatch(/Because 1/)
     expect(screen.queryByRole('dialog')).toBeNull()
 
-    fireEvent.click(screen.getByText('⬇ Download questions'))
+    fireEvent.click(screen.getByText('Download questions'))
     const dlg2 = screen.getByRole('dialog', { name: 'Download questions' })
     fireEvent.click(within(dlg2).getByLabelText(/^PDF/))
     fireEvent.click(within(dlg2).getByLabelText(/Student copy/))

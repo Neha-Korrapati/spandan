@@ -7,6 +7,8 @@ import Sidebar from '../components/Sidebar'
 import useIsMobile from '../hooks/useIsMobile'
 import { PageHeader, pageWash, inputStyle, primaryButton, ghostButton, toneText } from '../components/AppUI'
 import { SectionHeader, cardStyle } from '../components/InsightUI'
+import { Check, Clapperboard, FileText, Lightbulb, Mic, Plus } from 'lucide-react'
+import { Ico, renderIcon } from '../components/icons'
 
 const label = { display: 'block', fontSize: '13px', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '8px' }
 
@@ -73,14 +75,14 @@ function CreateRoomPage() {
 
       {/* Main Content */}
       <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', marginLeft: 'var(--sidebar-width, 240px)' }}>
-        <PageHeader isMobile={isMobile} icon="＋" title="Create New Room" subtitle="Create a new room for your students" />
+        <PageHeader isMobile={isMobile} icon={Plus} title="Create New Room" subtitle="Create a new room for your students" />
 
         {/* Content */}
         <div style={{ flex: 1, padding: isMobile ? '16px' : '28px 32px 36px', boxSizing: 'border-box', maxWidth: '100%', background: pageWash }}>
           <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'minmax(0, 1.45fr) minmax(300px, 1fr)', gap: '24px', alignItems: 'start', maxWidth: 1240 }}>
             {/* ---- left: the form ---- */}
             <div className="insight-card" style={{ ...cardStyle(isMobile), marginBottom: 0 }}>
-              <SectionHeader icon="📝" title="Room details" hint="Give your room a clear name so students can find it easily, then choose how you will teach." />
+              <SectionHeader icon={FileText} title="Room details" hint="Give your room a clear name so students can find it easily, then choose how you will teach." />
 
               {error && (
                 <div role="alert" style={{ background: 'var(--tint-danger-bg)', border: '1px solid var(--tint-danger-border)', borderRadius: '12px', padding: '12px 14px', marginBottom: '16px', color: 'var(--tint-danger-fg)', fontSize: '14px' }}>
@@ -108,8 +110,8 @@ function CreateRoomPage() {
                 <span style={label}>How will you teach?</span>
                 <div role="radiogroup" aria-label="Room mode" style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: 14 }}>
                   {[
-                    { key: 'normal', icon: '🎙️', title: 'Normal', desc: 'Teach live; Spandan listens through your microphone.', tint: 'var(--accent)', needs: ['A microphone', 'Works in any browser'] },
-                    { key: 'video', icon: '🎬', title: 'Video', desc: 'Play a YouTube video or live stream for the class.', tint: '#db2777', needs: ['A YouTube link', 'Chrome or Edge'] }
+                    { key: 'normal', icon: Mic, title: 'Normal', desc: 'Teach live; Spandan listens through your microphone.', tint: 'var(--accent)', needs: ['A microphone', 'Works in any browser'] },
+                    { key: 'video', icon: Clapperboard, title: 'Video', desc: 'Play a YouTube video or live stream for the class.', tint: '#db2777', needs: ['A YouTube link', 'Chrome or Edge'] }
                   ].map((opt) => {
                     const on = mode === opt.key
                     return (
@@ -122,11 +124,11 @@ function CreateRoomPage() {
                         <span aria-hidden="true" style={{ position: 'absolute', top: 12, right: 12, width: 20, height: 20, borderRadius: '50%', border: `2px solid ${on ? opt.tint : 'var(--border-color)'}`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                           {on && <span style={{ width: 10, height: 10, borderRadius: '50%', background: opt.tint }} />}
                         </span>
-                        <span aria-hidden="true" style={{ width: 46, height: 46, borderRadius: 14, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: 23, background: `linear-gradient(135deg, color-mix(in srgb, ${opt.tint} 10%, transparent), color-mix(in srgb, ${opt.tint} 26%, transparent))` }}>{opt.icon}</span>
+                        <span aria-hidden="true" style={{ width: 46, height: 46, borderRadius: 14, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: 23, color: toneText(opt.tint), background: `linear-gradient(135deg, color-mix(in srgb, ${opt.tint} 10%, transparent), color-mix(in srgb, ${opt.tint} 26%, transparent))` }}>{renderIcon(opt.icon, 23)}</span>
                         <span style={{ display: 'block', fontSize: 16, fontWeight: 750, marginTop: 10 }}>{opt.title}</span>
                         <span style={{ display: 'block', fontSize: 13, color: 'var(--text-secondary)', marginTop: 3, lineHeight: 1.45 }}>{opt.desc}</span>
                         <span style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginTop: 10 }}>
-                          {opt.needs.map((n) => <span key={n} style={{ fontSize: 11.5, fontWeight: 650, padding: '3px 9px', borderRadius: 999, color: on ? toneText(opt.tint) : 'var(--text-secondary)', background: on ? `color-mix(in srgb, ${opt.tint} 12%, transparent)` : 'color-mix(in srgb, var(--text-secondary) 10%, transparent)' }}>✓ {n}</span>)}
+                          {opt.needs.map((n) => <span key={n} style={{ fontSize: 11.5, fontWeight: 650, padding: '3px 9px', borderRadius: 999, color: on ? toneText(opt.tint) : 'var(--text-secondary)', background: on ? `color-mix(in srgb, ${opt.tint} 12%, transparent)` : 'color-mix(in srgb, var(--text-secondary) 10%, transparent)' }}><Ico as={Check} /> {n}</span>)}
                         </span>
                       </button>
                     )
@@ -163,7 +165,7 @@ function CreateRoomPage() {
 
               <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', alignItems: 'center', flexDirection: isMobile ? 'column-reverse' : 'row', paddingTop: 18, borderTop: '1px solid var(--border-color)' }}>
                 <button data-tour="create-button" onClick={handleCreateRoom} disabled={isDisabled} style={primaryButton(isDisabled, { width: isMobile ? '100%' : 'auto', padding: '13px 24px', fontSize: 15 })}>
-                  {isCreating ? 'Creating…' : '＋ Create Room'}
+                  {isCreating ? 'Creating…' : <><Ico as={Plus} /> Create Room</>}
                 </button>
                 <button onClick={() => navigate('/teacher')} style={ghostButton({ padding: '13px 20px', fontSize: '14px', width: isMobile ? '100%' : 'auto' })}>
                   Cancel
@@ -175,7 +177,7 @@ function CreateRoomPage() {
             {/* ---- right: how it works ---- */}
             <div style={{ display: 'grid', gap: 20 }}>
               <div className="insight-card" style={{ ...cardStyle(isMobile), marginBottom: 0 }}>
-                <SectionHeader icon="💡" tint="#f59e0b" title="How it works" />
+                <SectionHeader icon={Lightbulb} tint="#f59e0b" title="How it works" />
                 <ol style={{ listStyle: 'none', margin: 0, padding: 0, display: 'grid', gap: 14 }}>
                   {[
                     ['Create the room', 'You get a short code to share with the class.'],

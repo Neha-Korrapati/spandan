@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
+import { PenLine, Timer, X, Check, Rocket } from 'lucide-react'
+import { Ico } from './icons'
 
 function CreateQuestionOverlay({ isOpen, onClose, onLaunch, defaultType = 'MCQ' }) {
   const [questionType, setQuestionType] = useState(defaultType)
@@ -192,7 +194,7 @@ function CreateQuestionOverlay({ isOpen, onClose, onLaunch, defaultType = 'MCQ' 
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
             <h2 style={{ margin: 0, fontSize: '18px', fontWeight: '600', color: 'var(--accent)' }}>
-              ✍️ Create Question
+              <Ico as={PenLine} /> Create Question
             </h2>
             {isLaunched && (
               <div style={{
@@ -205,7 +207,7 @@ function CreateQuestionOverlay({ isOpen, onClose, onLaunch, defaultType = 'MCQ' 
                 border: `2px solid ${launchedTimeLeft <= 5 ? '#ef4444' : '#10b981'}`
               }}>
                 <span style={{ fontSize: '14px', color: launchedTimeLeft <= 5 ? '#ef4444' : '#10b981', fontWeight: '600' }}>
-                  {launchedTimeLeft <= 5 ? '⏱️ TIME! ' : '⏱️ ' }{launchedTimeLeft}s
+                  <Ico as={Timer} /> {launchedTimeLeft <= 5 ? 'TIME! ' : ''}{launchedTimeLeft}s
                 </span>
                 {launchedTimeLeft <= 5 && (
                   <span style={{ fontSize: '12px', color: '#ef4444', fontWeight: '600', animation: 'pulse 0.5s infinite' }}>
@@ -224,8 +226,9 @@ function CreateQuestionOverlay({ isOpen, onClose, onLaunch, defaultType = 'MCQ' 
               cursor: 'pointer',
               color: 'var(--text-secondary)'
             }}
+            aria-label="Close"
           >
-            ✕
+            <Ico as={X} />
           </button>
         </div>
 
@@ -346,7 +349,7 @@ function CreateQuestionOverlay({ isOpen, onClose, onLaunch, defaultType = 'MCQ' 
                       }}
                     />
                     {opt.isCorrect && (
-                      <span style={{ fontSize: '12px', color: 'var(--accent)', fontWeight: '500' }}>✓</span>
+                      <span style={{ fontSize: '12px', color: 'var(--accent)', fontWeight: '500' }}><Ico as={Check} /></span>
                     )}
                     {options.length > 2 && (
                       <button
@@ -360,8 +363,9 @@ function CreateQuestionOverlay({ isOpen, onClose, onLaunch, defaultType = 'MCQ' 
                           borderRadius: '4px',
                           cursor: 'pointer'
                         }}
+                        aria-label="Remove option"
                       >
-                        ✕
+                        <Ico as={X} />
                       </button>
                     )}
                   </>
@@ -388,7 +392,7 @@ function CreateQuestionOverlay({ isOpen, onClose, onLaunch, defaultType = 'MCQ' 
                       {opt.text}
                     </span>
                     {opt.isCorrect && (
-                      <span style={{ fontSize: '12px', color: 'var(--accent)', fontWeight: '500' }}>✓ Correct</span>
+                      <span style={{ fontSize: '12px', color: 'var(--accent)', fontWeight: '500' }}><Ico as={Check} /> Correct</span>
                     )}
                   </>
                 )}
@@ -501,7 +505,7 @@ function CreateQuestionOverlay({ isOpen, onClose, onLaunch, defaultType = 'MCQ' 
             gap: '8px'
           }}
         >
-          🚀 Launch Question
+          <Ico as={Rocket} /> Launch Question
         </button>
       </div>
     </div>

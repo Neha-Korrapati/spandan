@@ -9,6 +9,8 @@ import HelpButton from '../components/HelpButton'
 import useThemeStore from '../stores/themeStore'
 import useIsMobile from '../hooks/useIsMobile'
 import { API_URL } from '../config.js'
+import { ArrowLeft, ChartColumn, Check, GraduationCap, Lock as LockIcon, Mic, Moon, Presentation, Sun, Target, Zap } from 'lucide-react'
+import { Ico, renderIcon } from '../components/icons'
 
 // Password requirements for registration
 const PASSWORD_REQUIREMENTS = [
@@ -316,7 +318,7 @@ function AuthPage() {
           transition: 'all 0.2s'
         }}
       >
-        {isDark ? '☀️' : '🌙'}
+        {isDark ? <Sun size={18} aria-hidden="true" /> : <Moon size={18} aria-hidden="true" />}
         <span style={{ fontSize: '13px', fontWeight: '600' }}>{isDark ? 'Light' : 'Dark'}</span>
       </button>
 
@@ -352,9 +354,9 @@ function AuthPage() {
             {/* how it works + a sample poll card */}
             <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 1fr)', gap: 18, alignItems: 'stretch' }}>
               <ol style={{ ...glass, listStyle: 'none', margin: 0, padding: '18px 18px', borderRadius: 18, display: 'grid', gap: 14 }}>
-                {[['🎙️', 'Teach as usual', 'Spandan listens to your lecture.'], ['⚡', 'Questions appear', 'Polls drafted from what you just said.'], ['📊', 'Students answer live', 'Results the moment the class ends.']].map(([icon, t, d]) => (
+                {[[Mic, 'Teach as usual', 'Spandan listens to your lecture.'], [Zap, 'Questions appear', 'Polls drafted from what you just said.'], [ChartColumn, 'Students answer live', 'Results the moment the class ends.']].map(([icon, t, d]) => (
                   <li key={t} style={{ display: 'flex', gap: 12, alignItems: 'flex-start' }}>
-                    <span aria-hidden="true" style={{ width: 32, height: 32, flexShrink: 0, borderRadius: 10, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: 16, background: 'rgba(255,255,255,0.18)' }}>{icon}</span>
+                    <span aria-hidden="true" style={{ width: 32, height: 32, flexShrink: 0, borderRadius: 10, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: 16, background: 'rgba(255,255,255,0.18)' }}>{renderIcon(icon, 17)}</span>
                     <span>
                       <span style={{ display: 'block', fontSize: 14, fontWeight: 700 }}>{t}</span>
                       <span style={{ display: 'block', fontSize: 12.5, opacity: 0.8, marginTop: 1 }}>{d}</span>
@@ -370,7 +372,7 @@ function AuthPage() {
                 <div style={{ fontSize: 13.5, fontWeight: 700, lineHeight: 1.35, marginBottom: 12 }}>Which normal form removes transitive dependencies?</div>
                 {[['A', '2NF', 12, false], ['B', '3NF', 71, true], ['C', 'BCNF', 17, false]].map(([l, t, pct, ok]) => (
                   <div key={l} style={{ marginBottom: 7 }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12, fontWeight: 600, marginBottom: 3 }}><span>{l}. {t}{ok ? ' ✓' : ''}</span><span style={{ color: '#64748b' }}>{pct}%</span></div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12, fontWeight: 600, marginBottom: 3 }}><span>{l}. {t}{ok ? <> <Ico as={Check} /></> : ''}</span><span style={{ color: '#64748b' }}>{pct}%</span></div>
                     <div style={{ height: 7, borderRadius: 7, background: '#e2e8f0', overflow: 'hidden' }}><div style={{ width: `${pct}%`, height: '100%', borderRadius: 7, background: ok ? 'linear-gradient(90deg,#10b981,#34d399)' : '#94a3b8' }} /></div>
                   </div>
                 ))}
@@ -380,9 +382,9 @@ function AuthPage() {
 
             {/* features */}
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, marginTop: 26 }}>
-              {[['⚡', 'AI-Powered Questions'], ['📊', 'Live Analytics'], ['🎯', 'Multiple Question Types'], ['🔒', 'Secure & Private']].map(([icon, text]) => (
+              {[[Zap, 'AI-Powered Questions'], [ChartColumn, 'Live Analytics'], [Target, 'Multiple Question Types'], [LockIcon, 'Secure & Private']].map(([icon, text]) => (
                 <span key={text} style={{ ...glass, display: 'inline-flex', alignItems: 'center', gap: 8, padding: '8px 14px', borderRadius: 999, fontSize: 13, fontWeight: 600 }}>
-                  <span aria-hidden="true">{icon}</span>{text}
+                  <span aria-hidden="true" style={{ display: 'inline-flex' }}>{renderIcon(icon, 16)}</span>{text}
                 </span>
               ))}
             </div>
@@ -623,7 +625,7 @@ function AuthPage() {
                   onClick={handleBackToForm}
                   style={{ background: 'none', border: 'none', color: 'var(--accent)', fontSize: '14px', fontWeight: 600, cursor: 'pointer' }}
                 >
-                  ← Change details
+                  <Ico as={ArrowLeft} /> Change details
                 </button>
               </div>
             </form>
@@ -720,7 +722,7 @@ function AuthPage() {
                         transition: 'all 0.2s'
                       }}
                     >
-                      🎓 Learn
+                      <Ico as={GraduationCap} /> Learn
                     </button>
                     <button
                       type="button"
@@ -739,7 +741,7 @@ function AuthPage() {
                         transition: 'all 0.2s'
                       }}
                     >
-                      👨‍🏫 Teach
+                      <Ico as={Presentation} /> Teach
                     </button>
                   </div>
                 </div>

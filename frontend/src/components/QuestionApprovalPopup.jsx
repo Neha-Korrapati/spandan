@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import QuestionEditor from './QuestionEditor'
+import { FileText, Timer, Check, Pencil, X } from 'lucide-react'
+import { Ico } from './icons'
 
 function QuestionApprovalPopup({ questions, onApprove, onReject, onClose, onComplete }) {
   const [currentIndex, setCurrentIndex] = useState(0)
@@ -159,7 +161,7 @@ function QuestionApprovalPopup({ questions, onApprove, onReject, onClose, onComp
           <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
             <div>
               <h2 style={{ margin: 0, fontSize: '20px', fontWeight: '600', color: 'var(--text-primary)' }}>
-                📝 Question Approval
+                <Ico as={FileText} style={{ color: 'var(--accent)' }} /> Question Approval
               </h2>
               <p style={{ margin: '4px 0 0', fontSize: '12px', color: 'var(--text-secondary)' }}>
                 Question {currentIndex + 1} of {pendingQuestions.length}
@@ -181,7 +183,7 @@ function QuestionApprovalPopup({ questions, onApprove, onReject, onClose, onComp
                   fontWeight: '700',
                   animation: timeLeft <= 5 ? 'pulse 0.5s infinite' : 'none'
                 }}>
-                  ⏱️ {timeLeft}s
+                  <Ico as={Timer} /> {timeLeft}s
                 </span>
                 {timeLeft <= 5 && (
                   <span style={{ fontSize: '12px', color: '#ef4444', fontWeight: '600' }}>
@@ -206,7 +208,7 @@ function QuestionApprovalPopup({ questions, onApprove, onReject, onClose, onComp
                   cursor: 'pointer'
                 }}
               >
-                {isEditing ? '✓ Done' : '✏️ Edit'}
+                {isEditing ? <><Ico as={Check} /> Done</> : <><Ico as={Pencil} /> Edit</>}
               </button>
             )}
             <button
@@ -218,8 +220,9 @@ function QuestionApprovalPopup({ questions, onApprove, onReject, onClose, onComp
                 cursor: 'pointer',
                 color: 'var(--text-secondary)'
               }}
+              aria-label="Close"
             >
-              ✕
+              <Ico as={X} />
             </button>
           </div>
         </div>
@@ -390,7 +393,7 @@ function QuestionApprovalPopup({ questions, onApprove, onReject, onClose, onComp
                   gap: '8px'
                 }}
               >
-                ✕ Close
+                <Ico as={X} /> Close
               </button>
             )
           ) : (
@@ -413,7 +416,7 @@ function QuestionApprovalPopup({ questions, onApprove, onReject, onClose, onComp
                   gap: '8px'
                 }}
               >
-                ✕ Reject
+                <Ico as={X} /> Reject
               </button>
               <button
                 onClick={handleApprove}
@@ -433,7 +436,7 @@ function QuestionApprovalPopup({ questions, onApprove, onReject, onClose, onComp
                   gap: '8px'
                 }}
               >
-                ✓ Approve & Launch
+                <Ico as={Check} /> Approve & Launch
               </button>
             </>
           )}
