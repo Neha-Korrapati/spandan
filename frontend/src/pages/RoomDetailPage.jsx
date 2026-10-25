@@ -2100,6 +2100,8 @@ function RoomDetailPage() {
           isOpen={showCreateQuestion}
           onClose={() => setShowCreateQuestion(false)}
           onLaunch={handleCreateQuestion}
+          defaultTimeToAnswer={roomSettings.timeToAnswer || 30}
+          defaultPoints={roomSettings.points || 100}
         />
       )}
 
